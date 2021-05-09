@@ -1,0 +1,30 @@
+.errorDiv
+{
+    background-color: red;
+    width: 50%;
+    margin-left:25%;
+    color: white;
+}
+
+.divStyle
+{
+    margin-top: 20px;
+    background-color: white;
+    font-weight: bold,
+}
+
+.inputStyle
+{
+    height:30px;
+    width: 50%;
+    margin-left:25%;
+    font-family: "Poppins";
+}
+
+.labelStyle
+{
+    height:30px;
+    width: 50%;
+    margin-left:25%;
+    font-family: "Poppins";
+}

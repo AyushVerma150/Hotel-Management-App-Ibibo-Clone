@@ -1,0 +1,81 @@
+.formStyle
+{
+    display:block;
+    justify-content: center;
+    align-items: center;
+   
+  
+}
+
+.heading
+{
+   margin-top: 100px;
+   margin: 1em 0 0.5em 0;
+	color: #343434;
+	font-weight: normal;
+	font-family: 'Ultra', sans-serif;   
+	font-size: 36px;
+	line-height: 42px;
+	text-transform: uppercase;
+	text-shadow: 0 2px white, 0 3px #777;
+}
+
+
+.btnStyle{
+    background-color: dodgerblue;
+    height: 40px;
+    margin-left:25%;
+    width: 50%;
+    color: white;
+    font-weight:bold;
+    margin-top: 10px;
+    border-radius: 4px;
+    border:none;
+    cursor: pointer;
+}
+
+
+.ack
+{
+    display: none;
+     text-align: center; 
+}
+
+
+.Error
+{
+    width: 360px;
+   background-color: rgb(226, 193, 189);
+    font-weight: bold;
+    color: rgb(218, 45, 45);
+    border:2px solid rgb(197, 52, 52);
+    border-radius: 4px;
+}
+.Success
+{
+    width: 360px;
+    border:2px solid rgb(130, 223, 87);
+    border-radius: 4px;
+    background-color: rgb(183, 238, 101);
+    text-align:center;
+    font-weight: bolder;
+    color: green;
+    margin-bottom: 10px;
+}
+.Loading
+{
+    width: 360px;
+    border:2px solid rgb(187, 155, 216);
+    border-radius: 4px;
+    background-color: rgb(209, 149, 209);
+    text-align:center;
+    font-weight: bold;
+    color:purple;
+}
+
+
+.linkStyling
+{
+    text-decoration: none;
+    color: white;
+}

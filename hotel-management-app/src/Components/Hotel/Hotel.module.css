@@ -1,0 +1,140 @@
+.HotelDiv
+{
+    display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 10px;
+}
+
+.HotelCard
+{
+    box-sizing: border-box;
+    max-width: 350px;
+   text-align: center;
+   border:none;
+   outline:none;
+   text-transform: capitalize;
+   margin-left: 6px;
+   background-color: transparent;
+  padding: .5rem 1rem;
+  cursor: pointer;
+  border-radius: .25rem;
+}
+
+.image
+{
+    height:200px;
+    width:inherit;
+}
+
+.navDisplayFlex
+{
+    display:flex;
+    justify-content: space-between;
+    align-items:center;
+}
+.linkText
+{
+    text-decoration: none;
+    text-transform: uppercase;
+    color:white;
+}
+
+.heading
+{
+    text-transform: capitalize;
+    margin-left: 10px;
+    color: black;
+    font-size: 1.2rem;
+}
+
+.section
+{
+    color:#fff;
+    width: 100%;
+}
+
+.leftHalf
+{
+    position: absolute;
+    left:0px;
+    width:10%;
+    height: 100%;
+}
+.rightHalf
+{
+    position: absolute;
+    right:0px;
+    width:80%;
+  overflow: scroll;
+  margin-top: 10px;
+  height: 100%;
+}
+
+
+.HotelDisplay
+{
+    display: flex;  
+    margin-left: 110px;
+   background-color: transparent;
+  padding: .5rem 1rem;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+
+.HotelDisplayImage
+{
+    height:300px;
+    width:300px;
+}
+
+.HotelDisplay:hover{
+   outline: black;
+   border:0.5px solid rgb(23, 19, 235);
+}
+
+.CarouselDisplayImage
+{
+    height:300px;
+    width:300px;
+    border-radius: 1%;
+}
+
+.hotelListingDiv
+{
+    margin-left: 120px;
+}
+.hotelListingDiv:hover
+{
+    border: 0.5px solid black;
+    z-index:100;
+}
+
+
+.searchBar
+{
+display: flex;
+    width:100%;
+    height:100px;
+    background-color: #51a4f7;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    position: relative;
+
+}
+
+.blockDisplay
+{
+    display:block;
+    margin-left: 20px;
+}
+
+.textField
+{
+    border: none;
+    outline: none;
+    margin-left: 30px;
+color:black;
+    background-color:whitesmoke;
+}

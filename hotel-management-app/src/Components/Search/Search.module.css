@@ -1,0 +1,42 @@
+.divStyle
+{
+    text-align: center;
+    margin-top: 15px;
+    display: block;
+    background-color: transparent;
+    width: 200%;
+    padding: 10px;
+    margin-left: 180px;   
+}
+
+.filterBox
+{
+    border-radius: 10px;
+    margin-bottom: 3px;
+    background-color: #f7f6eb;
+    height: 50px;
+    text-align: center;
+    display: block;
+    font-size: 0.75rem;
+    color: black;
+    padding: 5px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);        
+}
+
+.filterContainer
+{
+    border-radius: 10px;
+    margin-bottom: 3px;
+    background-color: #f7f6eb;
+    text-align: left;
+    display: block;
+    font-size: 0.75rem;
+    color: black;
+    padding: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.display
+{
+    display: block;
+}
