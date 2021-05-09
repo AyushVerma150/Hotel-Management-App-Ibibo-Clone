@@ -1,0 +1,45 @@
+.formStyle
+{
+    display:block;
+    justify-content: center;
+    align-items: center;
+    margin-left: 25%;
+  
+}
+
+.btnStyle
+{
+    background-color: dodgerblue;
+    height: 40px;
+    margin-left: 25%;
+    width: 50%;
+    color: white;
+    font-weight:bold;
+    margin-top: 10px;
+    border-radius: 4px;
+    border:none;
+    cursor: pointer;
+}
+
+.Error
+{
+    width: 360px;
+   background-color: rgb(231, 175, 169);
+    font-weight: bold;
+    color: rgb(218, 45, 45);
+    border:2px solid rgb(197, 52, 52);
+    border-radius: 4px;
+}
+
+.heading
+{
+
+    margin: 1em 0 0.5em 0;
+	color: #343434;
+	font-weight: normal;
+	font-family: 'Ultra', sans-serif;   
+	font-size: 36px;
+	line-height: 42px;
+	text-transform: uppercase;
+	text-shadow: 0 2px white, 0 3px #777;
+}

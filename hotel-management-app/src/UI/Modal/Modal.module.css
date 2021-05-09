@@ -1,0 +1,62 @@
+.modalHeader
+{
+    background-color: dodgerblue;
+    font-family: "Poppins";
+    background-color: white;
+}
+
+
+.floatLeft
+{
+    float:left;
+}
+.floatRight
+{
+    float:right;
+}
+
+.marginLeft
+{
+    margin-left:10px;
+}
+
+.displayFlex
+{
+ display:flex
+}
+
+.labelStyle
+{
+    margin-left: 20px;
+    margin-top:20px;
+}
+
+.marginRight
+{
+    margin-right:5px
+}
+
+.imageStyle
+{
+    height:100px;
+    width:100px;
+}
+
+.checkBoxStyle
+{   
+    margin-top:5px;
+}
+
+.toppingBox
+{
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+
+.cheeseLabel
+{
+    margin-left: 20px;
+    margin-right: 10px;
+    margin-top:2px;
+}
