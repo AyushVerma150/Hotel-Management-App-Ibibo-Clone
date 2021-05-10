@@ -1,0 +1,79 @@
+.userProfileDiv {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.profileArea {
+  height: 300px;
+  width: 100%;
+  background-color: transparent;
+  margin-top: -10px;
+}
+
+.profileContent {
+  display: flex;
+}
+
+.leftHalf {
+  left: 0;
+  width: 30%;
+  background-color: transparent;
+  height: 300px;
+  margin-left: 300px;
+}
+
+.rightHalf {
+  right: 0;
+  width: 40%;
+  background-color: transparent;
+  height: 300px;
+  display: block;
+}
+
+.labelDiv {
+  display: block;
+  text-align: left;
+  margin-top: 100px;
+}
+
+.labelStyle {
+  font-size: 1.75rem;
+}
+
+.profileImage {
+  height: 300px;
+  width: 300px;
+  margin-top: 20px;
+  border-radius: 50%;
+}
+
+.userInfoDiv {
+  background-color: white;
+  height: 80vh;
+  margin-top: 40px;
+  margin-left: 200px;
+  color: black;
+  width: 80%;
+}
+
+.labelLogin {
+  font-size: 2rem;
+  text-align: left;
+  margin-left: -200px;
+  margin-top: 10px;
+}
+
+.highlight {
+  margin-left: 100px;
+  height: 10px;
+  color: black;
+}
+
+.displayFlex {
+  display: flex;
+}
+
+.displayBlock {
+  display: block;
+  margin-left: 20px;
+}

@@ -71,17 +71,9 @@ const SingleHotelView = ({ match }) => {
     roomsCount = roomsAvailable.length;
     roomComponent = roomsAvailable.map((room) => {
       return (
-        <div
-          style={{
-            backgroundColor: "transparent",
-            color: "black",
-            display: "flex",
-            border: "2px solid rgb(255, 109, 56)",
-            marginBottom: "0px",
-          }}
-        >
-          <div style={{ left: "0", backgroundColor: "white" }}>
-            <Carousel fade style={{ width: "275px", height: "275px" }}>
+        <div className={styles.singleRoomDiv}>
+          <div className={styles.carouselHotelDiv}>
+            <Carousel fade className={styles.carouselStyle}>
               {roomImages.map((image) => {
                 return (
                   <Carousel.Item>
@@ -95,30 +87,9 @@ const SingleHotelView = ({ match }) => {
               })}
             </Carousel>
           </div>
-          <div
-            style={{
-              right: "0",
-              width: "120%",
-              height: "300px",
-              backgroundColor: "white",
-            }}
-          >
-            <div
-              style={{
-                display: "flex",
-                width: "100%",
-                border: "none",
-                outline: "none",
-              }}
-            >
-              <div
-                style={{
-                  left: "0",
-                  width: "50%",
-                  border: "none",
-                  outline: "none",
-                }}
-              >
+          <div className={styles.outerCardDiv}>
+            <div className={styles.cardStyling}>
+              <div className={styles.locationDiv}>
                 <CardComponent
                   style={{ height: "300px", border: "none", color: "black" }}
                   cardTitle={[
@@ -129,46 +100,6 @@ const SingleHotelView = ({ match }) => {
                     { heading: "Area", para: room.area },
                   ]}
                 />
-
-                {/* <Card style={{ height: "300px", border: "none" }}>
-                                <Card.Body>
-                                    <Card.Title>
-                                        <strong style={{
-                                            fontFamily: "Poppins",
-                                        }}>Room Information</strong>
-                                    </Card.Title>
-                                    <Card.Title>
-                                        <div style={{ display: "block", fontSize: "1rem", color: "black" }}>
-                                            <strong style={{ fontFamily: "Poppins" }}>Type</strong>
-                                            <p
-                                                style={{
-                                                    fontFamily: "Poppins",
-                                                    color: "black"
-                                                }}>{room.type}</p>
-                                        </div>
-                                    </Card.Title>
-                                    <Card.Title>
-                                        <div style={{ display: "block", fontSize: "1rem", color: "black" }}>
-                                            <strong style={{ fontFamily: "Poppins" }}><i class="fas fa-map-marked-alt"></i> Capacity</strong>
-                                            <p style={{ fontFamily: "Poppins" }}>{room.capacity}</p>
-                                        </div>
-
-                                    </Card.Title>
-                                    <Card.Title>
-                                        <div style={{ display: "block", fontSize: "1rem", color: "black" }}>
-                                            <strong style={{ fontFamily: "Poppins" }}><i class="fas fa-monument"></i> Bed Size</strong>
-                                            <p style={{ fontFamily: "Poppins", color: "black" }}>{room.bedSize}</p>
-                                        </div>
-
-                                    </Card.Title>
-                                    <Card.Title>
-                                        <div style={{ display: "block", fontSize: "1rem", color: "black" }}>
-                                            <strong style={{ fontFamily: "Poppins" }}><i class="fas fa-hotel"></i> Area</strong>
-                                            <p style={{ fontFamily: "Poppins" }}>{room.area}</p>
-                                        </div>
-                                    </Card.Title>
-                                </Card.Body>
-                            </Card> */}
               </div>
 
               <div
@@ -232,65 +163,6 @@ const SingleHotelView = ({ match }) => {
                     },
                   ]}
                 />
-
-                {/* <Card style={{ height: "300px", border: "none" }}>
-                  <Card.Body>
-                    <Card.Title>
-                      <strong
-                        style={{
-                          fontFamily: "Poppins",
-                        }}
-                      >
-                        Pricing Information
-                      </strong>
-                    </Card.Title>
-                    <Card.Title>
-                      <div
-                        style={{
-                          color: "black",
-                          display: "block",
-                          fontSize: "1rem",
-                          height: "120px",
-                        }}
-                      >
-                        <p>Pricing Starts At</p>
-                        <p>
-                          Original Price:{" "}
-                          <strong>
-                            <s>
-                              <i class="fas fa-rupee-sign"></i>
-                              {room.price}
-                            </s>
-                          </strong>
-                        </p>
-                        <p>
-                          Discount Price:{" "}
-                          <strong>
-                            <i class="fas fa-rupee-sign"></i>
-                            {room.discountPrice}
-                          </strong>
-                        </p>
-                      </div>
-                    </Card.Title>
-                    <Card.Title>
-                      <Button
-                        onClick={() => {
-                          handleSelectRoom(room);
-                        }}
-                        style={{
-                          backgroundColor: "rgb(255, 109, 56)",
-                          border: "none",
-                          outline: "none",
-                          height: "60px",
-                          width: "50%",
-                          borderRadius: "10px",
-                        }}
-                      >
-                        <strong>Select Room</strong>
-                      </Button>
-                    </Card.Title>
-                  </Card.Body>
-                </Card> */}
               </div>
             </div>
           </div>
@@ -441,48 +313,6 @@ const SingleHotelView = ({ match }) => {
                   },
                 ]}
               />
-              {/* <Card
-                style={{
-                  border: "0px",
-                  marginTop: "20px",
-                  backgroundColor: "transparent",
-                  borderRadius: "10px",
-                  width: "100%",
-                }}
-              >
-                <Card.Body>
-                  <Card.Title>
-                    <div style={{ display: "block", fontSize: "1rem" }}>
-                      <strong style={{ fontFamily: "Poppins" }}>Name</strong>
-                      <p style={{ fontFamily: "Poppins" }}>{hotel.name}</p>
-                    </div>
-                  </Card.Title>
-                  <Card.Title>
-                    <div style={{ display: "block", fontSize: "1rem" }}>
-                      <strong style={{ fontFamily: "Poppins" }}>
-                        <i class="fas fa-map-marked-alt"></i> Locate On Map
-                      </strong>
-                      <p style={{ fontFamily: "Poppins" }}>{hotel.location}</p>
-                    </div>
-                  </Card.Title>
-                  <Card.Title>
-                    <div style={{ display: "block", fontSize: "1rem" }}>
-                      <strong style={{ fontFamily: "Poppins" }}>
-                        <i class="fas fa-monument"></i> Landmark
-                      </strong>
-                      <p style={{ fontFamily: "Poppins" }}>{hotel.landmark}</p>
-                    </div>
-                  </Card.Title>
-                  <Card.Title>
-                    <div style={{ display: "block", fontSize: "1rem" }}>
-                      <strong style={{ fontFamily: "Poppins" }}>
-                        <i class="fas fa-hotel"></i> Type
-                      </strong>
-                      <p style={{ fontFamily: "Poppins" }}>{hotel.type}</p>
-                    </div>
-                  </Card.Title>
-                </Card.Body>
-              </Card> */}
             </div>
             <div style={{ right: "0", width: "50%" }}>
               <CardComponent
@@ -499,22 +329,7 @@ const SingleHotelView = ({ match }) => {
                     para: "",
                     type: "button",
                     content: (
-                      <div
-                        style={{
-                          display: "block",
-                          fontSize: "1rem",
-                          color: "green",
-                          backgroundColor: "#f7f6eb",
-                          height: "30px",
-                          width: "120%",
-                          textAlign: "center",
-                          padding: "5px",
-                          marginLeft: "-20px",
-                          borderRadius: "10px",
-                          boxShadow:
-                            "0 4px 7x 0 rgba(0, 0, 0, 1), 0 6px 20px 0 rgba(0, 0, 0, 0.9)",
-                        }}
-                      >
+                      <div className={styles.specialDivStyling}>
                         <strong style={{ fontFamily: "Poppins" }}>
                           <i class="fas fa-utensils"></i> Free Breakfast
                         </strong>
@@ -526,22 +341,7 @@ const SingleHotelView = ({ match }) => {
                     para: "",
                     type: "button",
                     content: (
-                      <div
-                        style={{
-                          backgroundColor: "#f7f6eb",
-                          height: "30px",
-                          width: "120%",
-                          textAlign: "center",
-                          display: "block",
-                          fontSize: "1rem",
-                          color: "dodgerblue",
-                          padding: "5px",
-                          marginLeft: "-20px",
-                          borderRadius: "10px",
-                          boxShadow:
-                            "0 2px 4x 0 rgba(0, 0, 0, 2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-                        }}
-                      >
+                      <div className={styles.specialDivStyling}>
                         <strong style={{ fontFamily: "Poppins" }}>
                           <i class="fas fa-wifi"></i> Internet/Wifi
                         </strong>
@@ -554,19 +354,7 @@ const SingleHotelView = ({ match }) => {
                     para: "",
                     type: "button",
                     content: (
-                      <div
-                        style={{
-                          display: "block",
-                          fontSize: "1rem",
-                          height: "120px",
-                          width: "120%",
-                          backgroundColor: "#f7f6eb",
-                          padding: "10px",
-                          marginLeft: "-20px",
-                          borderRadius: "10px",
-                          textAlign: "center",
-                        }}
-                      >
+                      <div className={styles.specialDivStyling}>
                         <p>Pricing Starts At</p>
                         <p>
                           Original Price:{" "}
@@ -623,117 +411,6 @@ const SingleHotelView = ({ match }) => {
                   },
                 ]}
               />
-
-              {/* <Card
-                style={{
-                  border: "0px",
-                  marginTop: "20px",
-                  backgroundColor: "transparent",
-                  borderRadius: "10px",
-                  width: "100%",
-                }}
-              >
-                <Card.Body>
-                  <Card.Title>
-                    <div
-                      style={{
-                        display: "block",
-                        fontSize: "1rem",
-                        color: "green",
-                        backgroundColor: "#f7f6eb",
-                        height: "30px",
-                        width: "120%",
-                        textAlign: "center",
-                        padding: "5px",
-                        marginLeft: "-20px",
-                        borderRadius: "10px",
-                        boxShadow:
-                          "0 4px 7x 0 rgba(0, 0, 0, 1), 0 6px 20px 0 rgba(0, 0, 0, 0.9)",
-                      }}
-                    >
-                      <strong style={{ fontFamily: "Poppins" }}>
-                        <i class="fas fa-utensils"></i> Free Breakfast
-                      </strong>
-                    </div>
-                  </Card.Title>
-                  <Card.Title>
-                    <div
-                      style={{
-                        backgroundColor: "#f7f6eb",
-                        height: "30px",
-                        width: "120%",
-                        textAlign: "center",
-                        display: "block",
-                        fontSize: "1rem",
-                        color: "dodgerblue",
-                        padding: "5px",
-                        marginLeft: "-20px",
-                        borderRadius: "10px",
-                        boxShadow:
-                          "0 2px 4x 0 rgba(0, 0, 0, 2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-                      }}
-                    >
-                      <strong style={{ fontFamily: "Poppins" }}>
-                        <i class="fas fa-wifi"></i> Internet/Wifi
-                      </strong>
-                    </div>
-                  </Card.Title>
-                  <Card.Title>
-                    <div
-                      style={{
-                        display: "block",
-                        fontSize: "1rem",
-                        height: "120px",
-                        width: "120%",
-                        backgroundColor: "#f7f6eb",
-                        padding: "10px",
-                        marginLeft: "-20px",
-                        borderRadius: "10px",
-                      }}
-                    >
-                      <p>Pricing Starts At</p>
-                      <p>
-                        Original Price:{" "}
-                        <strong>
-                          <s>
-                            <i class="fas fa-rupee-sign"></i>
-                            {hotel.discountPrice}
-                          </s>
-                        </strong>
-                      </p>
-                      <p>
-                        Discount Price:{" "}
-                        <strong>
-                          <i class="fas fa-rupee-sign"></i>
-                          {hotel.startPrice}
-                        </strong>
-                      </p>
-                    </div>
-                  </Card.Title>
-                  <Card.Title>
-                    <div style={{ display: "block", fontSize: "1rem" }}>
-                      <Button
-                        style={{
-                          backgroundColor: "rgb(255, 109, 56)",
-                          border: "none",
-                          outline: "none",
-                          height: "60px",
-                          width: "120%",
-                          marginLeft: "-20px",
-                          borderRadius: "4px",
-                        }}
-                      >
-                        <Link to="roomSection" spy={true} smooth={true}>
-                          <strong>
-                            View {roomsCount} Room Options{" "}
-                            <i class="fas fa-angle-down"></i>
-                          </strong>
-                        </Link>
-                      </Button>
-                    </div>
-                  </Card.Title>
-                </Card.Body>
-              </Card> */}
             </div>
           </div>
         </div>
@@ -848,27 +525,6 @@ const SingleHotelView = ({ match }) => {
             );
           })}
         </div>
-      </div>
-
-      <div
-        style={{
-          borderRadius: "10px",
-          backgroundColor: "transparent",
-          width: "80%",
-          display: "block",
-          marginLeft: "150px",
-          marginBottom: "10px",
-          textAlign: "center",
-          boxShadow:
-            " 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-        }}
-      >
-        {/* <Map
-                    google={this.props.google}
-                    zoom={8}
-                    style={mapStyles}
-                    initialCenter={{ lat: 47.444, lng: -122.176 }}
-                /> */}
       </div>
     </div>
   );

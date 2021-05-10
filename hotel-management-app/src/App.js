@@ -5,7 +5,13 @@ import { AppBar, Toolbar } from "@material-ui/core";
 import { IconButton } from "@material-ui/core";
 import { Home } from "@material-ui/icons";
 import { List, ListItem, ListItemText } from "@material-ui/core";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useHistory,
+} from "react-router-dom";
 import HotelList from "Components/Hotel/HotelList";
 import styles from "Components/Hotel/Hotel.module.css";
 import SingleHotelView from "Components/Hotel/SingleHotelView";
@@ -16,8 +22,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { getModalState, showModal, hideModal } from "UI/Modal/ModalSlice";
 import Login from "Components/User/Login";
 import SignUp from "Components/User/SignUp";
+import UserProfile from "Components/User/UserProfile";
+//import { useHistory, Link } from "react-router-dom";
 
 const App = () => {
+  const history = useHistory();
+
+  const handleUserProfileClick = () => {
+    alert(JSON.stringify(history));
+    //history.push("/userProfile");
+  };
   const dispatch = useDispatch();
   const modalState = useSelector(getModalState);
   const [userStatus, setUserStatus] = useState("login");
@@ -26,129 +40,141 @@ const App = () => {
 
   const navLinks = [
     { title: "about us", path: "/about-us" },
-    { title: "authorize", path: "/authorize" },
+    { title: "User Profile", path: "/userProfile" },
   ];
 
   return (
     <div className="App">
-      <AppBar
-        position="static"
-        style={{
-          backgroundColor: "rgb(255, 109, 56)",
-          zIndex: "20",
-          display: "flex",
-          fontFamily: "Poppins",
-        }}
-      >
-        <Toolbar
-          style={{ display: "flex", width: "100%", fontFamily: "Poppins" }}
+      <Router>
+        <AppBar
+          position="static"
+          style={{
+            backgroundColor: "rgb(255, 109, 56)",
+            zIndex: "20",
+            display: "flex",
+            fontFamily: "Poppins",
+          }}
         >
-          <IconButton
-            edge="start"
-            color="inherit"
-            aria-label="home"
-            style={{ width: "55%", left: "0", marginLeft: "-30px" }}
+          <Toolbar
+            style={{ display: "flex", width: "100%", fontFamily: "Poppins" }}
           >
-            <Home fontSize="medium" style={{ marginLeft: "-550px" }} />
-          </IconButton>
-          <List
-            style={{
-              width: "20%",
-              justifyContent: "space-evenly",
-              marginLeft: "30px",
-              right: "0",
-              fontFamily: "Poppins",
-            }}
-            component="nav"
-            aria-labelledby="main navigation"
-            className={styles.navDisplayFlex}
-          >
-            {navLinks.map(({ title, path }) => {
+            <IconButton
+              edge="start"
+              color="inherit"
+              aria-label="home"
+              style={{ width: "55%", left: "0", marginLeft: "-30px" }}
+            >
+              <Home fontSize="medium" style={{ marginLeft: "-550px" }} />
+            </IconButton>
+            <List
+              style={{
+                width: "20%",
+                justifyContent: "space-evenly",
+                marginLeft: "30px",
+                right: "0",
+                fontFamily: "Poppins",
+              }}
+              component="nav"
+              aria-labelledby="main navigation"
+              className={styles.navDisplayFlex}
+            >
+              <Link to="/userProfile">
+                <p
+                  style={{ fontSize: "1.5rem", cursor: "pointer" }}
+                  onClick={handleUserProfileClick}
+                >
+                  User Profile
+                </p>
+              </Link>
+
+              {/* {navLinks.map(({ title, path }) => {
               return (
-                <a href={path} key={title} className={styles.linkText}>
-                  <ListItem button>
-                    <ListItemText
-                      primary={title}
-                      style={{ fontFamily: "Poppins", textDecoration: "none" }}
-                    />
-                  </ListItem>
-                </a>
+                // <a
+                //   key={title}
+                //   className={styles.linkText}
+                // >
+                <ListItem button>
+                  <ListItemText
+                    primary={title}
+                    style={{ fontFamily: "Poppins", textDecoration: "none" }}
+                  />
+                </ListItem>
               );
-            })}
-          </List>
-          <div
-            style={{
-              backgroundColor: "white",
-              height: "50px",
-              right: "0px",
-              width: "20%",
-              borderRadius: "10px",
-              color: "rgb(255, 109, 56)",
-              textAlign: "center",
-            }}
-          >
-            <div style={{ display: "flex", width: "100%" }}>
-              <img
-                src={
-                  !currentUser
-                    ? "http://www.gravatar.com/avatar/?d=mp"
-                    : currentUser.userImage
-                }
-                alt="user"
-                style={{
-                  height: "30px",
-                  width: "30px",
-                  borderRadius: "50%",
-                  left: "0",
-                  marginTop: "10px",
-                  marginLeft: "20px",
-                }}
-              />
-              <p
-                style={{
-                  marginTop: "13px",
-                  fontWeight: "Bold",
-                  fontFamily: "Poppins",
-                  right: "0",
-                  width: "45%",
-                  marginLeft: "20px",
-                }}
-              >
-                {!currentUser ? (
-                  <a
-                    style={{ cursor: "pointer" }}
-                    onClick={() => {
-                      dispatch(showModal());
-                    }}
-                  >
-                    Sign Up | Login
-                  </a>
-                ) : (
-                  <div style={{ display: "flex" }}>
-                    <p style={{ width: "80%", left: "0" }}>
-                      {"Hey , " + currentUser.userName.split(" ")[0]}
-                    </p>
-                    <label
-                      style={{
-                        fontWeight: "Bold",
-                        fontFamily: "Poppins",
-                        right: "0",
-                        width: "15%",
-                        color: "black",
-                        marginLeft: "5px",
-                        cursor: "pointer",
+            })} */}
+            </List>
+            <div
+              style={{
+                backgroundColor: "white",
+                height: "50px",
+                right: "0px",
+                width: "20%",
+                borderRadius: "10px",
+                color: "rgb(255, 109, 56)",
+                textAlign: "center",
+              }}
+            >
+              <div style={{ display: "flex", width: "100%" }}>
+                <img
+                  src={
+                    !currentUser
+                      ? "http://www.gravatar.com/avatar/?d=mp"
+                      : currentUser.userImage
+                  }
+                  alt="user"
+                  style={{
+                    height: "30px",
+                    width: "30px",
+                    borderRadius: "50%",
+                    left: "0",
+                    marginTop: "10px",
+                    marginLeft: "20px",
+                  }}
+                />
+                <p
+                  style={{
+                    marginTop: "13px",
+                    fontWeight: "Bold",
+                    fontFamily: "Poppins",
+                    right: "0",
+                    width: "45%",
+                    marginLeft: "20px",
+                  }}
+                >
+                  {!currentUser ? (
+                    <a
+                      style={{ cursor: "pointer" }}
+                      onClick={() => {
+                        dispatch(showModal());
                       }}
                     >
-                      <strong>Logout</strong>
-                    </label>
-                  </div>
-                )}
-              </p>
+                      Sign Up | Login
+                    </a>
+                  ) : (
+                    <div style={{ display: "flex" }}>
+                      <p style={{ width: "80%", left: "0" }}>
+                        {"Hey , " + currentUser.userName.split(" ")[0]}
+                      </p>
+                      <label
+                        style={{
+                          fontWeight: "Bold",
+                          fontFamily: "Poppins",
+                          right: "0",
+                          width: "15%",
+                          color: "black",
+                          marginLeft: "5px",
+                          cursor: "pointer",
+                        }}
+                        onClick={handleUserProfileClick}
+                      >
+                        <strong>View Profile</strong>
+                      </label>
+                    </div>
+                  )}
+                </p>
+              </div>
             </div>
-          </div>
-        </Toolbar>
-      </AppBar>
-      <Router>
+          </Toolbar>
+        </AppBar>
         <Switch>
           <Route
             exact
@@ -172,6 +198,7 @@ const App = () => {
             component={SearchedHotels}
           />
           <Route exact path="/checkout" component={Checkout} />
+          <Route exact path="/userProfile" component={UserProfile} />
         </Switch>
       </Router>
 

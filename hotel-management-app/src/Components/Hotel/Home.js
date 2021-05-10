@@ -400,24 +400,6 @@ const Home = (props) => {
                 },
               ]}
             />
-
-            // <Card
-            //   className={styles.HotelCard}
-            //   onClick={() => {
-            //     setFilterSearch((prevFilter) => ({
-            //       ...prevFilter,
-            //       searchText: hotel.name,
-            //     }));
-            //     HandleDestinationClick(hotel.name);
-            //   }}
-            // >
-            //   <Card.Img src={hotel.image} className={styles.image}></Card.Img>
-            //   <Card.Body>
-            //     <Card.Title>
-            //       <p className={styles.heading}>{hotel.name}</p>
-            //     </Card.Title>
-            //   </Card.Body>
-            // </Card>
           );
         })}
       </div>

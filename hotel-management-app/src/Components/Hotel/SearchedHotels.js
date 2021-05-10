@@ -34,9 +34,6 @@ const SearchedHotels = ({ match }, props) => {
   return (
     <section className={styles.section}>
       <SearchDisplay />
-      {/* <div style={{ width: "100%", backgroundColor: "dodgerblue", height: "100px" }}>
-            Filtered Search
-        </div> */}
       <div className={styles.leftHalf}>
         <FilterSearch />
       </div>
@@ -90,15 +87,7 @@ const SearchedHotels = ({ match }, props) => {
                             ]}
                           />
                         </div>
-                        <div
-                          style={{
-                            right: "0",
-                            backgroundColor: "yellow",
-                            width: "50%",
-                            border: "none",
-                            outline: "none",
-                          }}
-                        >
+                        <div className={styles.cardComponentDiv}>
                           <CardComponent
                             style={{ height: "300px", border: "none" }}
                             cardTitle={[
