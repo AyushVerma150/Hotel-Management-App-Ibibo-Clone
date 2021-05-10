@@ -1,10 +1,8 @@
-import HomeComponent from "../src/Components/Hotel/Home";
 import React, { useState } from "react";
-import "./App.css";
 import { AppBar, Toolbar } from "@material-ui/core";
 import { IconButton } from "@material-ui/core";
 import { Home } from "@material-ui/icons";
-import { List, ListItem, ListItemText } from "@material-ui/core";
+import { List } from "@material-ui/core";
 import {
   BrowserRouter as Router,
   Switch,
@@ -12,52 +10,62 @@ import {
   Link,
   useHistory,
 } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+
+import HomeComponent from "../src/Components/Hotel/Home";
 import HotelList from "Components/Hotel/HotelList";
-import styles from "Components/Hotel/Hotel.module.css";
 import SingleHotelView from "Components/Hotel/SingleHotelView";
 import SearchedHotels from "Components/Hotel/SearchedHotels";
 import Checkout from "Components/Checkout/Checkout";
 import ModalComponent from "UI/Modal/Modal";
-import { useDispatch, useSelector } from "react-redux";
-import { getModalState, showModal, hideModal } from "UI/Modal/ModalSlice";
+import { getModalState, showModal } from "UI/Modal/ModalSlice";
 import Login from "Components/User/Login";
 import SignUp from "Components/User/SignUp";
 import UserProfile from "Components/User/UserProfile";
+
+import "./App.css";
+import styles from "Components/Hotel/Hotel.module.css";
 //import { useHistory, Link } from "react-router-dom";
 
 const App = () => {
+  const appBarStyling = {
+    backgroundColor: "rgb(255, 109, 56)",
+    zIndex: "20",
+    display: "flex",
+    fontFamily: "Poppins",
+  };
+
+  const toolBarStyling = {
+    display: "flex",
+    width: "100%",
+    fontFamily: "Poppins",
+  };
+
+  const listStyling = {
+    width: "20%",
+    justifyContent: "space-evenly",
+    marginLeft: "30px",
+    right: "0",
+    fontFamily: "Poppins",
+  };
+
   const history = useHistory();
 
   const handleUserProfileClick = () => {
     alert(JSON.stringify(history));
-    //history.push("/userProfile");
   };
+
   const dispatch = useDispatch();
   const modalState = useSelector(getModalState);
   const [userStatus, setUserStatus] = useState("login");
 
   const currentUser = useSelector((state) => state.user.currentUser);
 
-  const navLinks = [
-    { title: "about us", path: "/about-us" },
-    { title: "User Profile", path: "/userProfile" },
-  ];
-
   return (
     <div className="App">
       <Router>
-        <AppBar
-          position="static"
-          style={{
-            backgroundColor: "rgb(255, 109, 56)",
-            zIndex: "20",
-            display: "flex",
-            fontFamily: "Poppins",
-          }}
-        >
-          <Toolbar
-            style={{ display: "flex", width: "100%", fontFamily: "Poppins" }}
-          >
+        <AppBar position="static" style={appBarStyling}>
+          <Toolbar style={toolBarStyling}>
             <IconButton
               edge="start"
               color="inherit"
@@ -67,53 +75,22 @@ const App = () => {
               <Home fontSize="medium" style={{ marginLeft: "-550px" }} />
             </IconButton>
             <List
-              style={{
-                width: "20%",
-                justifyContent: "space-evenly",
-                marginLeft: "30px",
-                right: "0",
-                fontFamily: "Poppins",
-              }}
+              style={listStyling}
               component="nav"
               aria-labelledby="main navigation"
               className={styles.navDisplayFlex}
             >
               <Link to="/userProfile">
                 <p
-                  style={{ fontSize: "1.5rem", cursor: "pointer" }}
+                  className={styles.paraStyles}
                   onClick={handleUserProfileClick}
                 >
                   User Profile
                 </p>
               </Link>
-
-              {/* {navLinks.map(({ title, path }) => {
-              return (
-                // <a
-                //   key={title}
-                //   className={styles.linkText}
-                // >
-                <ListItem button>
-                  <ListItemText
-                    primary={title}
-                    style={{ fontFamily: "Poppins", textDecoration: "none" }}
-                  />
-                </ListItem>
-              );
-            })} */}
             </List>
-            <div
-              style={{
-                backgroundColor: "white",
-                height: "50px",
-                right: "0px",
-                width: "20%",
-                borderRadius: "10px",
-                color: "rgb(255, 109, 56)",
-                textAlign: "center",
-              }}
-            >
-              <div style={{ display: "flex", width: "100%" }}>
+            <div className={styles.divStylingApp}>
+              <div className={styles.ToolBarStyling}>
                 <img
                   src={
                     !currentUser
@@ -121,25 +98,9 @@ const App = () => {
                       : currentUser.userImage
                   }
                   alt="user"
-                  style={{
-                    height: "30px",
-                    width: "30px",
-                    borderRadius: "50%",
-                    left: "0",
-                    marginTop: "10px",
-                    marginLeft: "20px",
-                  }}
+                  className={styles.UserProfileDiv}
                 />
-                <p
-                  style={{
-                    marginTop: "13px",
-                    fontWeight: "Bold",
-                    fontFamily: "Poppins",
-                    right: "0",
-                    width: "45%",
-                    marginLeft: "20px",
-                  }}
-                >
+                <p className={styles.UserProfileInnerDiv}>
                   {!currentUser ? (
                     <a
                       style={{ cursor: "pointer" }}
@@ -150,8 +111,8 @@ const App = () => {
                       Sign Up | Login
                     </a>
                   ) : (
-                    <div style={{ display: "flex" }}>
-                      <p style={{ width: "80%", left: "0" }}>
+                    <div className={styles.displayFlex}>
+                      <p className={styles.UserInfoInnerDiv}>
                         {"Hey , " + currentUser.userName.split(" ")[0]}
                       </p>
                       <label
@@ -211,14 +172,14 @@ const App = () => {
           <div>
             <Login />
             <br />
-            <a style={{ marginLeft: "28%" }}>
+            <a className={styles.AnchorTagStyle}>
               Are you new here ?{" "}
               <strong
                 onClick={() => {
                   //alert( "Will This work" );
                   setUserStatus("signup");
                 }}
-                style={{ cursor: "pointer", fontFamily: "Poppins" }}
+                className={styles.stongStyles}
               >
                 Sign Up
               </strong>{" "}
@@ -228,14 +189,14 @@ const App = () => {
           <div>
             <SignUp />
             <br />
-            <a style={{ marginLeft: "25%" }}>
+            <a className={styles.AnchorTagStyle}>
               Already have an account ?{" "}
               <strong
                 onClick={() => {
                   //alert( "Will This work" );
                   setUserStatus("login");
                 }}
-                style={{ cursor: "pointer", fontFamily: "Poppins" }}
+                className={styles.stongStyles}
               >
                 Login
               </strong>{" "}

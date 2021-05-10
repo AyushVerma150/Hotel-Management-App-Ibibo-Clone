@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { Card, Carousel, Button } from "react-bootstrap";
+import React, { useEffect } from "react";
+import { Carousel, Button } from "react-bootstrap";
 import styles from "Components/Hotel/Hotel.module.css";
 import { Link } from "react-scroll";
 import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { Map, GoogleApiWrapper } from "google-maps-react";
 import {
   fetchHotelWithRooms,
   fetchHotelReviews,
@@ -60,7 +59,6 @@ const SingleHotelView = ({ match }) => {
 
   let roomsAvailable = [];
   if (hotelWithRoom.rooms) {
-    console.log("Minimum Room Capacity is" + minGuestsInRoom);
     roomsAvailable = hotelWithRoom.rooms.filter((room) => {
       if (room.capacity >= minGuestsInRoom) return true;
       else return false;
@@ -91,7 +89,7 @@ const SingleHotelView = ({ match }) => {
             <div className={styles.cardStyling}>
               <div className={styles.locationDiv}>
                 <CardComponent
-                  style={{ height: "300px", border: "none", color: "black" }}
+                  className={styles.singleHotelViewCard}
                   cardTitle={[
                     { heading: "Room Information", para: "" },
                     { heading: "Type", para: room.type },
@@ -102,15 +100,7 @@ const SingleHotelView = ({ match }) => {
                 />
               </div>
 
-              <div
-                style={{
-                  right: "0",
-                  width: "50%",
-                  border: "none",
-                  outline: "none",
-                  marginLeft: "10px",
-                }}
-              >
+              <div className={styles.pricingDiv}>
                 <CardComponent
                   style={{ height: "300px", border: "none" }}
                   cardTitle={[
@@ -139,21 +129,14 @@ const SingleHotelView = ({ match }) => {
                             onClick={() => {
                               handleSelectRoom(room);
                             }}
-                            style={{
-                              backgroundColor: "rgb(255, 109, 56)",
-                              border: "none",
-                              outline: "none",
-                              height: "60px",
-                              width: "50%",
-                              borderRadius: "10px",
-                            }}
+                            className={styles.roomSelectButton}
                           >
                             <strong>Select Room</strong>
                           </Button>
                           <br />
                           <br />
                           {!currentUser ? (
-                            <p style={{ fontSize: "1rem" }}>
+                            <p>
                               <strong>Note</strong> You must Login / signup
                               before Selecting Room
                             </p>
@@ -176,43 +159,22 @@ const SingleHotelView = ({ match }) => {
   if (currentHotelReviews) {
     reviewComponent = currentHotelReviews.map((review) => {
       return (
-        <div
-          style={{ width: "100%", border: "1px solid black", marginTop: "2px" }}
-        >
-          <div
-            style={{
-              display: "flex",
-              padding: "10px",
-            }}
-          >
+        <div className={styles.hotelReviewOuterDiv}>
+          <div classname={styles.hotelreviewinnerdiv}>
             <img
               src={review.user.userImage}
               alt="BigCo Inc. logo"
-              style={{
-                height: "30px",
-                width: "30px",
-                borderRadius: "10px",
-              }}
+              className={styles.reviewImageStyle}
             />
-            <label
-              style={{
-                height: "20px",
-                marginLeft: "10px",
-              }}
-            >
+            <label className={styles.imageLabel}>
               {" "}
               <strong>{review.user.userName}</strong>
             </label>
           </div>
           <br />
-          <div
-            style={{
-              display: "block",
-              padding: "5px",
-            }}
-          >
-            <p style={{ textAlign: "left" }}>{review.description}</p>
-            <p style={{ textAlign: "left" }}>
+          <div classname={styles.descriptiondiv}>
+            <p className={styles.reviewDesc}>{review.description}</p>
+            <p className={styles.reviewDesc}>
               <strong>Rating : </strong>
               {review.rating} / 5
             </p>
@@ -233,37 +195,15 @@ const SingleHotelView = ({ match }) => {
   ];
 
   return (
-    <div style={{ backgroundColor: "transparent", marginTop: "20px" }}>
-      <div
-        style={{
-          borderRadius: "10px",
-          backgroundColor: "transparent",
-          display: "flex",
-          marginLeft: "120px",
-          marginBottom: "10px",
-          marginRight: "100px",
-          boxShadow:
-            " 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-        }}
-      >
-        <div
-          style={{
-            left: "0",
-            width: "60%",
-            backgroundColor: "transparent",
-            borderRadius: "10px",
-          }}
-        >
+    <div className={styles.singleHotelViewMainDiv}>
+      <div className={styles.singleHotelViewMainInnerDiv}>
+        <div className={styles.singleHotelViewLeftAlignedDiv}>
           <Carousel fade>
             {hotelImages.map((image) => {
               return (
                 <Carousel.Item>
                   <img
-                    style={{
-                      height: "400px",
-                      width: "700px",
-                      borderRadius: "10px",
-                    }}
+                    className={styles.carouselImageStyling}
                     src={image}
                     alt=""
                   />
@@ -272,17 +212,9 @@ const SingleHotelView = ({ match }) => {
             })}
           </Carousel>
         </div>
-        <div
-          style={{
-            right: "0",
-            width: "30%",
-            height: "400px",
-            textAlign: "left",
-            backgroundColor: "transparent",
-          }}
-        >
-          <div style={{ display: "flex", width: "120%" }}>
-            <div style={{ left: "0", width: "50%" }}>
+        <div className={styles.outerCardComponentMain}>
+          <div className={styles.innerCardComponentMain}>
+            <div className={styles.innerCardComponentAlignedLeft}>
               <CardComponent
                 style={{
                   border: "0px",
@@ -314,7 +246,7 @@ const SingleHotelView = ({ match }) => {
                 ]}
               />
             </div>
-            <div style={{ right: "0", width: "50%" }}>
+            <div className={styles.rightAlignedDiv}>
               <CardComponent
                 style={{
                   border: "0px",
@@ -380,24 +312,13 @@ const SingleHotelView = ({ match }) => {
                     para: "",
                     type: "button",
                     content: (
-                      <div style={{ display: "block", fontSize: "1rem" }}>
-                        <Button
-                          style={{
-                            backgroundColor: "rgb(255, 109, 56)",
-                            border: "none",
-                            outline: "none",
-                            height: "60px",
-                            width: "120%",
-                            marginLeft: "-20px",
-                            borderRadius: "4px",
-                          }}
-                        >
+                      <div className={styles.roomOptionsOuterDiv}>
+                        <Button className={styles.roomsOptionButton}>
                           <Link to="roomSection" spy={true} smooth={true}>
                             <strong>
-                              {/* View {roomsCount} Room Options{" "} */}
                               {roomsAvailable.length >= 1 ? (
                                 <div>
-                                  <p>View {roomsCount} Room Options</p>
+                                  <p>View {roomsCount} Room Options </p>
                                   <i class="fas fa-angle-down"></i>
                                 </div>
                               ) : (
@@ -417,29 +338,11 @@ const SingleHotelView = ({ match }) => {
       </div>
 
       <br />
-      <div
-        style={{
-          borderRadius: "10px",
-          backgroundColor: "transparent",
-          width: "80%",
-          display: "block",
-          marginLeft: "150px",
-          marginBottom: "10px",
-          textAlign: "center",
-          boxShadow:
-            " 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-        }}
-      >
+      <div className={styles.commonButtonType}>
         {roomsAvailable.length >= 1 ? (
           <div>
             <div id="roomSection">
-              <label
-                style={{
-                  fontSize: "1.5rem",
-                  marginTop: "20px",
-                  fontFamily: "Poppins",
-                }}
-              >
+              <label className={styles.roomOptionsLabel}>
                 <strong>Room Options</strong>
               </label>
             </div>
@@ -448,76 +351,26 @@ const SingleHotelView = ({ match }) => {
         ) : null}
       </div>
       <br />
-      <div
-        style={{
-          borderRadius: "10px",
-          backgroundColor: "transparent",
-          width: "80%",
-          display: "block",
-          marginLeft: "150px",
-          marginBottom: "10px",
-          textAlign: "center",
-          boxShadow:
-            " 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-        }}
-      >
+      <div className={styles.commonButtonType}>
         <div>
-          <label
-            style={{
-              fontSize: "1.5rem",
-              marginTop: "20px",
-              fontFamily: "Poppins",
-            }}
-          >
+          <label className={styles.commonLabelStyling}>
             <strong>Guest Reviews and Rating</strong>
           </label>
           {reviewComponent}
-          <Button
-            style={{
-              backgroundColor: "rgb(255, 109, 56)",
-              border: "none",
-              outline: "none",
-              width: "20%",
-              height: "60px",
-              borderRadius: "4px",
-              marginTop: "10px",
-              marginBottom: "10px",
-            }}
-          >
-            <strong>Load More</strong>
-          </Button>
         </div>
       </div>
 
       <br />
-      <div
-        style={{
-          borderRadius: "10px",
-          backgroundColor: "transparent",
-          width: "80%",
-          display: "block",
-          marginLeft: "150px",
-          marginBottom: "10px",
-          textAlign: "center",
-          boxShadow:
-            " 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-        }}
-      >
+      <div className={styles.commonButtonType}>
         <div>
-          <label
-            style={{
-              fontSize: "1.5rem",
-              marginTop: "20px",
-              fontFamily: "Poppins",
-            }}
-          >
+          <label className={styles.commonLabelStyling}>
             <strong>Hotel Policies</strong>
           </label>
         </div>
-        <div style={{ textAlign: "left", padding: "20px" }}>
+        <div className={styles.policyOuterDiv}>
           {hotelPolicies.map((policy) => {
             return (
-              <div style={{ width: "100%" }}>
+              <div classname={styles.policyinnerdiv}>
                 <p>
                   <i class="fa fa-check-circle" aria-hidden="true"></i> {policy}
                 </p>

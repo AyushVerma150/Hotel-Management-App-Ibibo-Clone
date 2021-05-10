@@ -1,22 +1,25 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  setFilterSearchSlice,
-  setChildrenReducer,
-} from "Components/Hotel/HotelSlice";
-import { TextField } from "@material-ui/core";
-import styles from "Components/Hotel/Hotel.module.css";
 import { Button } from "react-bootstrap";
+
+import TextFieldComponent from "UI/TextFieldComponent";
+import { setFilterSearchSlice } from "Components/Hotel/HotelSlice";
 import { updateAdults, updateRooms } from "Components/Hotel/HotelSlice";
+
+import styles from "Components/Hotel/Hotel.module.css";
+
 const SearchDisplay = () => {
   const dispatch = useDispatch();
 
   const filterResults = useSelector((state) => state.hotel.filteredSearch);
   const [filterSearch, setFilterSearch] = useState(filterResults);
+
   const [children, setChildren] = useState(
     useSelector((state) => state.hotel.children)
   );
+
   const [showDiv, setShowDiv] = useState("none");
+
   const handleChange = (e) => {
     setFilterSearch((prevFilter) => ({
       ...prevFilter,
@@ -28,9 +31,9 @@ const SearchDisplay = () => {
     <div className={styles.searchBar}>
       <div className={styles.blockDisplay}>
         <label htmlFor="searchText">Area , Location or Landmark</label>
-        <TextField
+        <TextFieldComponent
           id="searchText"
-          onChange={(e) => {
+          changed={(e) => {
             handleChange(e);
           }}
           name="searchText"
@@ -40,9 +43,8 @@ const SearchDisplay = () => {
       <div className={styles.checkInDiv}>
         <label htmlFor="checkIn">Check In</label>
         <br />
-        <TextField
-          style={{ color: "white" }}
-          onChange={(e) => {
+        <TextFieldComponent
+          changed={(e) => {
             handleChange(e);
           }}
           name="checkIn"
@@ -59,9 +61,9 @@ const SearchDisplay = () => {
       <div className={styles.checkOutDiv}>
         <label htmlFor="checkOut">Check Out</label>
         <br />
-        <TextField
+        <TextFieldComponent
           name="checkOut"
-          onChange={(e) => {
+          changed={(e) => {
             handleChange(e);
           }}
           disablePast
@@ -75,8 +77,8 @@ const SearchDisplay = () => {
       </div>
       <div className={styles.blockDisplay}>
         <label htmlFor="guests">Guests Information</label>
-        <TextField
-          onClick={() => {
+        <TextFieldComponent
+          clicked={() => {
             setShowDiv("block");
           }}
           name="guests"

@@ -1,31 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchAllHotels, setStayDates } from "Components/Hotel/HotelSlice";
-import { Card, Button } from "react-bootstrap";
-import styles from "Components/Hotel/Hotel.module.css";
+import { Button } from "react-bootstrap";
+
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { useHistory } from "react-router";
+import nextId from "react-id-generator";
+import SearchIcon from "@material-ui/icons/Search";
+import moment from "moment";
+
+import { fetchAllHotels, setStayDates } from "Components/Hotel/HotelSlice";
 import {
   setFilterSearchSlice,
   setChildrenReducer,
   updateSearchText,
 } from "Components/Hotel/HotelSlice";
-import nextId from "react-id-generator";
-import SearchIcon from "@material-ui/icons/Search";
-import moment from "moment";
 import CardComponent from "UI/CardComponent";
+import TextFieldComponent from "UI/TextFieldComponent";
+
+import styles from "Components/Hotel/Hotel.module.css";
 
 const Home = (props) => {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(fetchAllHotels());
-  }, []);
-
-  var currentDate = new Date();
-  currentDate.setDate(currentDate.getDate() + 1);
-  console.log(currentDate);
-
   const history = useHistory();
   const hotels = useSelector((state) => state.hotel.hotels);
 
@@ -33,9 +28,8 @@ const Home = (props) => {
   let tomorrow = moment().add(1, "days").format("YYYY-MM-DD").toString();
 
   const [component, setComponent] = useState(null);
-
-  const [checkInDate, checkInDateChange] = useState(today);
-  const [checkOutDate, checkOutDateChange] = useState(tomorrow);
+  const checkInDate = today;
+  const checkOutDate = tomorrow;
   const [children, setChildren] = useState([]);
   const [filterSearch, setFilterSearch] = useState({
     searchText: "",
@@ -46,10 +40,15 @@ const Home = (props) => {
     children: 0,
   });
 
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchAllHotels());
+  }, []);
+
   const searchHotelHandler = () => {
     if (filterSearch.searchText === "") {
       setComponent(
-        <div style={{ color: "red" }}> Search Box Cannot be Empty </div>
+        <div className={styles.errorDiv}> Search Box Cannot be Empty </div>
       );
     } else {
       dispatch(setFilterSearchSlice(filterSearch));
@@ -87,7 +86,7 @@ const Home = (props) => {
       <div className={styles.innerDiv}>
         {component}
         <div style={{ display: "block" }}>
-          <label htmlFor="nameField">Where</label>
+          <label htmlFor="searchText">Where</label>
           <br />
           <Autocomplete
             freeSolo
@@ -96,13 +95,11 @@ const Home = (props) => {
             options={hotels.map((option) => option.name)}
             onChange={handleSubmit}
             renderInput={(params) => (
-              <TextField
-                {...params}
-                margin="normal"
-                aria-label="enter search"
+              <TextFieldComponent
+                params={params}
                 name="searchText"
                 placeholder="Search"
-                value={filterSearch.searchText}
+                defaultValue={filterSearch.searchText}
                 InputProps={{
                   ...params.InputProps,
                   startAdornment: <SearchIcon />,
@@ -112,17 +109,18 @@ const Home = (props) => {
               />
             )}
           />
-          <div style={{ display: "flex", marginTop: "10px" }}>
-            <div style={{ left: "0", width: "30%", marginRight: "10px" }}>
+          <div className={styles.checkInDivInner}>
+            <div className={styles.innerDivForCheckIn}>
               <label htmlFor="checkIn">Check In</label>
               <br />
-              <TextField
-                onChange={(e) => {
+
+              <TextFieldComponent
+                changed={(e) => {
                   handleChange(e);
                 }}
+                type="date"
                 name="checkIn"
                 id="date"
-                type="date"
                 defaultValue={today}
                 inputProps={{
                   min: filterSearch.checkIn,
@@ -130,15 +128,14 @@ const Home = (props) => {
                 }}
               />
             </div>
-            <div style={{ right: "0", width: "30%" }}>
+            <div className={styles.innerDivForCheckOut}>
               <label htmlFor="checkOut">Check Out</label>
               <br />
-              <TextField
+              <TextFieldComponent
                 name="checkOut"
-                onChange={(e) => {
+                changed={(e) => {
                   handleChange(e);
                 }}
-                disablePast
                 id="date"
                 type="date"
                 defaultValue={tomorrow}
@@ -153,19 +150,12 @@ const Home = (props) => {
             {filterSearch.adults + filterSearch.children} Guest{" "}
             {filterSearch.rooms} Room
           </label>
-          <div
-            style={{
-              width: "400px",
-              display: "flex",
-              width: "100%",
-              justifyContent: "space-between",
-            }}
-          >
-            <div style={{ display: "block", textAlign: "center" }}>
-              <lable style={{ textAlign: "center" }}>Adults</lable>
+          <div className={styles.outerDivForAdults}>
+            <div className={styles.innerDivForAdults}>
+              <lable>Adults</lable>
               <br />
               <Button
-                style={{ marginLeft: "3px", marginRight: "3px" }}
+                className={styles.btnStyleAdults}
                 onClick={() => {
                   if (filterSearch.adults > 1) {
                     setFilterSearch((prevFilter) => ({
@@ -177,11 +167,11 @@ const Home = (props) => {
               >
                 -
               </Button>
-              <Button style={{ marginLeft: "3px", marginRight: "3px" }}>
+              <Button className={styles.btnStyleAdults}>
                 {filterSearch.adults}
               </Button>
               <Button
-                style={{ marginLeft: "3px", marginRight: "3px" }}
+                className={styles.btnStyleAdults}
                 name="incrementAdults"
                 onClick={() => {
                   setFilterSearch((prevFilter) => ({
@@ -193,12 +183,12 @@ const Home = (props) => {
                 +
               </Button>
             </div>
-            <div style={{ display: "flex", right: "0", marginLeft: "10px" }}>
-              <div style={{ display: "block", textAlign: "center" }}>
+            <div className={styles.divStyleForChildren}>
+              <div>
                 <lable style={{ textAlign: "center" }}>Rooms</lable>
                 <br />
                 <Button
-                  style={{ marginLeft: "3px", marginRight: "3px" }}
+                  className={styles.btnStyleAdults}
                   onClick={() => {
                     if (filterSearch.rooms > 1) {
                       setFilterSearch((prevFilter) => ({
@@ -210,11 +200,11 @@ const Home = (props) => {
                 >
                   -
                 </Button>
-                <Button style={{ marginLeft: "3px", marginRight: "3px" }}>
+                <Button className={styles.btnStyleAdults}>
                   {filterSearch.rooms}
                 </Button>
                 <Button
-                  style={{ marginLeft: "3px", marginRight: "3px" }}
+                  className={styles.btnStyleAdults}
                   onClick={() => {
                     if (filterSearch.rooms < 8) {
                       setFilterSearch((prevFilter) => ({
@@ -228,12 +218,12 @@ const Home = (props) => {
                 </Button>
               </div>
             </div>
-            <div style={{ display: "flex", right: "0", marginLeft: "10px" }}>
-              <div style={{ display: "block", textAlign: "center" }}>
-                <lable style={{ textAlign: "center" }}>Children</lable>
+            <div className={styles.divStyleForChildren}>
+              <div className={styles.innerDivStyleForChildren}>
+                <lable>Children</lable>
                 <br />
                 <Button
-                  style={{ marginLeft: "3px", marginRight: "3px" }}
+                  className={styles.btnStyleAdults}
                   onClick={() => {
                     if (filterSearch.children >= 1) {
                       setFilterSearch((prevFilter) => ({
@@ -245,11 +235,11 @@ const Home = (props) => {
                 >
                   -
                 </Button>
-                <Button style={{ marginLeft: "3px", marginRight: "3px" }}>
+                <Button className={styles.btnStyleAdults}>
                   {filterSearch.children}
                 </Button>
                 <Button
-                  style={{ marginLeft: "3px", marginRight: "3px" }}
+                  className={styles.btnStyleAdults}
                   onClick={() => {
                     if (filterSearch.children <= 3) {
                       setChildren([
@@ -271,53 +261,24 @@ const Home = (props) => {
               </div>
             </div>
           </div>
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(2, 1fr)",
-              marginTop: "10px",
-              marginLeft: "10px",
-            }}
-          >
+          <div className={styles.divStyleForAllChilds}>
             {children.map((child, index) => {
               return (
-                <div style={{ display: "block" }}>
+                <div className={styles.displayBlock}>
                   <label htmlFor={index}>
                     {" "}
                     <strong>{"Child " + (index + 1) + " Age"}</strong>
                   </label>
                   <br></br>
-                  <div style={{ display: "flex" }}>
-                    <Button
-                      style={{
-                        border: "none",
-                        outline: "none",
-                        textAlign: "center",
-                        backgroundColor: "transparent",
-                        boxShadow:
-                          "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-                        height: "30px",
-                        width: "40px",
-                        borderRadius: "10px",
-                      }}
-                    >
+                  <div className={styles.displayFlex}>
+                    <Button className={styles.btnStyleForSubmit}>
                       {" "}
                       <i
-                        style={{ color: "black" }}
+                        className={styles.colorblack}
                         class="fas fa-minus"
                       ></i>{" "}
                     </Button>
-                    <label
-                      style={{
-                        textAlign: "center",
-                        backgroundColor: "transparent",
-                        boxShadow:
-                          "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-                        height: "30px",
-                        width: "40px",
-                        borderRadius: "10px",
-                      }}
-                    >
+                    <label className={styles.labelStyles}>
                       <strong>{child.age}</strong>
                     </label>
                     <Button
@@ -334,19 +295,9 @@ const Home = (props) => {
                           })
                         );
                       }}
-                      style={{
-                        border: "none",
-                        outline: "none",
-                        textAlign: "center",
-                        backgroundColor: "transparent",
-                        boxShadow:
-                          "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-                        height: "30px",
-                        width: "40px",
-                        borderRadius: "10px",
-                      }}
+                      className={styles.btnStyleForSubmit}
                     >
-                      <i style={{ color: "black" }} class="fas fa-plus"></i>
+                      <i className={styles.colorBlack} class="fas fa-plus"></i>
                     </Button>
                   </div>
                 </div>
@@ -355,28 +306,14 @@ const Home = (props) => {
           </div>
         </div>
 
-        <Button
-          style={{
-            height: "50px",
-            width: "200px",
-            marginTop: "30px",
-            marginLeft: "150px",
-          }}
-          onClick={searchHotelHandler}
-        >
+        <Button className={styles.searchHotels} onClick={searchHotelHandler}>
           Search Hotels
         </Button>
       </div>
       <br />
-      <div
-        style={{
-          display: "block",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
+      <div className={styles.destinationsDiv}>
         <p className={styles.heading}>Popular Destinations</p>
-        <hr style={{ color: "black" }} />
+        <hr className={styles.colorblack} />
       </div>
 
       <div className={styles.HotelDiv}>
