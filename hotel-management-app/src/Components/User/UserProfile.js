@@ -1,83 +1,53 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
-import CardComponent from "UI/CardComponent";
 import Button from "UI/Button";
 import EditUserProfile from "./EditUserProfile";
+import { fetchAllBookings, fetchAllReviews } from "Components/User/UserSlice";
+import UserBookings from "Components/User/userBookings";
+import UserReview from "Components/User/UserReview";
 
 import otherConstants from "Constants/OtherConstants";
 import styles from "Components/User/User.module.css";
-const UserProfile = () => {
-  const currentUser = useSelector((state) => state.user.currentUser);
-  const [component, setComponent] = useState(null);
 
-  useEffect(() => {}, []);
+const UserProfile = () => {
+  const dispatch = useDispatch();
+
+  const initialComponent = <div>{otherConstants.initialText}</div>;
+  const [bookingsComponent, setBookingsComponent] = useState(null);
+  const currentUser = useSelector((state) => state.user.currentUser);
+  const selectedHotels = useSelector((state) => state.user.userBookings);
+  const status = useSelector((state) => state.user.status);
+  const bookingsMade = useSelector((state) => state.hotel.bookingsMade);
+
+  useEffect(() => {
+    dispatch(fetchAllBookings({ userId: currentUser.id }));
+    dispatch(fetchAllReviews({ userId: currentUser.id }));
+  }, [dispatch, currentUser.id, bookingsMade]);
+
+  useEffect(() => {
+    if (status === otherConstants.successStatus) {
+      if (selectedHotels) {
+        setBookingsComponent(<UserBookings selectedHotels={selectedHotels} />);
+      } else {
+        setBookingsComponent(otherConstants.noBookingsText);
+      }
+    } else {
+      setBookingsComponent(otherConstants.noBookingsText);
+    }
+  }, [selectedHotels, status]);
 
   let reviewComponent = null;
-  let bookingsComponent = null;
   const currentUserReviews = useSelector(
     (state) => state.user.currentUserReviews
   );
 
-  const bookingsMadeByUser = useSelector((state) => state.hotel.bookingsMade);
+  const [component, setComponent] = useState(initialComponent);
 
-  if (bookingsMadeByUser) {
-    bookingsComponent = (
-      <CardComponent
-        cardTitle={[
-          { heading: otherConstants.bookingsId, para: bookingsMadeByUser.id },
-          {
-            heading: otherConstants.primaryGuest,
-            para: bookingsMadeByUser.primaryGuest,
-          },
-          {
-            heading: otherConstants.roomsBooked,
-            para: bookingsMadeByUser.roomsBooked,
-          },
-          {
-            heading: otherConstants.totalAmount,
-            para: bookingsMadeByUser.amount,
-          },
-          {
-            heading: otherConstants.checkInText,
-            para: bookingsMadeByUser.checkIn,
-          },
-          {
-            heading: otherConstants.checkOutText,
-            para: bookingsMadeByUser.checkOut,
-          },
-        ]}
-      />
-    );
-  }
-
-  if (currentUserReviews) {
-    reviewComponent = currentUserReviews.map((review) => {
-      return (
-        <div className={styles.userReviewOuterDiv}>
-          <div className={styles.innerDiv}>
-            <img
-              src={review.user.userImage}
-              alt={otherConstants.imageAlt}
-              className={styles.reviewImage}
-            />
-            <label className={styles.labelReview}>
-              <strong>{review.user.userName}</strong>
-            </label>
-          </div>
-          <br />
-          <div className={styles.descriptionStyles}>
-            <p>{review.description}</p>
-            <p>
-              <strong>Rating : </strong>
-              {review.rating} / {otherConstants.overAllRating}
-            </p>
-          </div>
-        </div>
-      );
-    });
+  if (currentUserReviews.length >= 1) {
+    reviewComponent = <UserReview currentUserReviews={currentUserReviews} />;
   } else {
-    reviewComponent = <p>No Reviews were made by you</p>;
+    reviewComponent = <p>{otherConstants.noReviewsText}</p>;
   }
 
   const handleEditProfile = () => {
@@ -99,6 +69,9 @@ const UserProfile = () => {
     );
   };
 
+  const totalTrips = selectedHotels.length;
+  const totalReviews = currentUserReviews.length;
+
   return (
     <div className={styles.userProfileDiv}>
       {currentUser ? (
@@ -117,21 +90,22 @@ const UserProfile = () => {
                   {currentUser.userName}
                 </label>
                 <br />
-
                 <label className={styles.labelStyle}>{currentUser.email}</label>
               </div>
               <div className={styles.displayFlex}>
                 <div className={styles.displayBlock}>
-                  <label className={styles.labelStyle}>
-                    {currentUserReviews.length}
-                  </label>
+                  <label className={styles.labelStyle}>{totalReviews}</label>
                   <br />
-                  <label className={styles.labelStyle}>Reviews</label>
+                  <label className={styles.labelStyle}>
+                    {otherConstants.totalReviews}
+                  </label>
                 </div>
                 <div className={styles.displayBlock}>
-                  <label className={styles.labelStyle}>0</label>
+                  <label className={styles.labelStyle}>{totalTrips}</label>
                   <br />
-                  <label className={styles.labelStyle}>Trips</label>
+                  <label className={styles.labelStyle}>
+                    {otherConstants.totalTrips}
+                  </label>
                 </div>
               </div>
             </div>

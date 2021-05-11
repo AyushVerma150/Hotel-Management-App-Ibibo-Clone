@@ -9,6 +9,7 @@ const initialState = {
   currentUser: null,
   status: otherConstants.idleStatus,
   currentUserReviews: [],
+  userBookings: [],
   error: null,
   token: null,
 };
@@ -27,6 +28,36 @@ export const userLoginResponse = createAsyncThunk(
       }
       token = response.data.data[1];
       userInfo = response.data.data[0];
+      return response.data.data;
+    } catch (err) {
+      throw new Error(otherConstants.requestDenied);
+    }
+  }
+);
+
+export const fetchAllBookings = createAsyncThunk(
+  "users/fetchAllBookings",
+  async (values) => {
+    try {
+      const response = await axiosInstance.post(
+        otherConstants.bookingsPath,
+        values
+      );
+      return response.data.data;
+    } catch (err) {
+      throw new Error(otherConstants.requestDenied);
+    }
+  }
+);
+
+export const fetchAllReviews = createAsyncThunk(
+  "users/fetchAllReviews",
+  async (values) => {
+    try {
+      const response = await axiosInstance.post(
+        otherConstants.reviewsPath,
+        values
+      );
       return response.data.data;
     } catch (err) {
       throw new Error(otherConstants.requestDenied);
@@ -82,6 +113,30 @@ export const loginSlice = createSlice({
       state.currentUser = action.payload;
     },
     [userSignUpResponse.rejected]: (state, action) => {
+      state.status = otherConstants.failedStatus;
+      state.error = errorMsg;
+    },
+
+    [fetchAllBookings.pending]: (state) => {
+      state.status = otherConstants.loadingState;
+    },
+    [fetchAllBookings.fulfilled]: (state, action) => {
+      state.status = otherConstants.successStatus;
+      state.userBookings = action.payload;
+    },
+    [fetchAllBookings.rejected]: (state, action) => {
+      state.status = otherConstants.failedStatus;
+      state.error = errorMsg;
+    },
+
+    [fetchAllReviews.pending]: (state) => {
+      state.status = otherConstants.loadingState;
+    },
+    [fetchAllReviews.fulfilled]: (state, action) => {
+      state.status = otherConstants.successStatus;
+      state.currentUserReviews = action.payload;
+    },
+    [fetchAllReviews.rejected]: (state, action) => {
       state.status = otherConstants.failedStatus;
       state.error = errorMsg;
     },

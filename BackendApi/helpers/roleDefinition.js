@@ -1,15 +1,16 @@
 //roles object gives the permissions according to different roles.
-const roles = {
-    admin: {
-        can: ['edit', 'delete', 'update', 'create']
-    },
-    user: {
-        can: ['signup', 'login', 'view']
-    },
-    guest: {
-        cac: ['view']
-    }
-};
+const constants = require("../utils/constants");
 
+const roles = {
+  admin: {
+    can: constants.adminRolesAllowed,
+  },
+  user: {
+    can: constants.userRolesAllowed,
+  },
+  guest: {
+    can: constants.guestRolesAllowed,
+  },
+};
 
 module.exports = roles;

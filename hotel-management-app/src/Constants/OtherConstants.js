@@ -245,6 +245,15 @@ const otherMsg = {
   signUpNote: "Already have an account ? ",
   loginNote: "Are you new Here ? ",
   navComponent: "nav",
+  bookingUser: "Booking Made By :",
+  totalTrips: "Trips",
+  totalReviews: "Reviews",
+  noReviewsText: "No Reviews were made by you",
+  totalAmountPaid: "Amount Paid",
+  noBookingsText: "No Bookings Were Made By You",
+  initialText: "Hello and Welcome , to AvHotels.IN",
+  bookingsPath: "/admin/fetchAllBookings",
+  reviewsPath: "/admin/fetchAllReviews",
 };
 
 export default Object.freeze(otherMsg);

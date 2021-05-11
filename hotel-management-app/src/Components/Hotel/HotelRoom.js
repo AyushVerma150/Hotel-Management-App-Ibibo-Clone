@@ -1,8 +1,8 @@
 import React from "react";
-import { Carousel } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 
+import CarouselComponent from "UI/CarouselComponent";
 import Button from "UI/Button";
 import CardComponent from "UI/CardComponent";
 import { setHotelSelected } from "Components/Hotel/HotelSlice";
@@ -45,23 +45,17 @@ const HotelRoom = () => {
     <div>
       {/* 
       This Section Allows To Display Rooms Fetched of The Hotels If Available */}
+
       {roomsAvailable.map((room) => {
         return (
           <div className={styles.singleRoomDiv}>
             <div className={styles.carouselHotelDiv}>
-              <Carousel fade className={styles.carouselStyle}>
-                {roomImages.map((image) => {
-                  return (
-                    <Carousel.Item>
-                      <img
-                        className={styles.CarouselDisplayImage}
-                        src={image}
-                        alt={otherConstants.imageAlt}
-                      />
-                    </Carousel.Item>
-                  );
-                })}
-              </Carousel>
+              <CarouselComponent
+                className={styles.carouselStyle}
+                imageStyle={styles.CarouselDisplayImage}
+                imageData={roomImages}
+                altText={otherConstants.imageAlt}
+              />
             </div>
             <div className={styles.outerCardDiv}>
               <div className={styles.cardStyling}>

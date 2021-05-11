@@ -5,6 +5,7 @@ import { Link } from "react-scroll";
 
 import Button from "UI/Button";
 import CardComponent from "UI/CardComponent";
+import CarouseComponent from "UI/CarouselComponent";
 
 import styles from "Components/Hotel/Hotel.module.css";
 import otherConstants from "Constants/OtherConstants";
@@ -38,19 +39,11 @@ const HotelDetail = (props) => {
     // This Section Returns Hotel Information  , Pricing and Cost and Soldout Info
     <div className={styles.singleHotelViewMainInnerDiv}>
       <div className={styles.singleHotelViewLeftAlignedDiv}>
-        <Carousel fade>
-          {hotelImages.map((image) => {
-            return (
-              <Carousel.Item>
-                <img
-                  className={styles.carouselImageStyling}
-                  src={image}
-                  alt={otherConstants.imageAlt}
-                />
-              </Carousel.Item>
-            );
-          })}
-        </Carousel>
+        <CarouseComponent
+          imageStyle={styles.carouselImageStyling}
+          imageData={hotelImages}
+          altText={otherConstants.imageAlt}
+        />
       </div>
       <div className={styles.outerCardComponentMain}>
         <div className={styles.innerCardComponentMain}>

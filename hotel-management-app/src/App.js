@@ -97,9 +97,11 @@ const App = () => {
                         {otherConstants.heyUser +
                           currentUser.userName.split(" ")[0]}
                       </p>
-                      <label className={styles.viewProfileLabel}>
-                        <strong>{otherConstants.viewProfile}</strong>
-                      </label>
+                      <Link to={otherConstants.userProfilePath}>
+                        <p className={styles.paraStyles}>
+                          {otherConstants.viewProfile}
+                        </p>
+                      </Link>
                     </div>
                   )}
                 </p>

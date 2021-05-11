@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import { Carousel } from "react-bootstrap";
+import CarouselComponent from "UI/CarouselComponent";
 import { Link } from "react-router-dom";
 import SearchDisplay from "Components/Hotel/SearchDisplay";
 import FilterSearch from "Components/Search/FilterSearch";
@@ -47,19 +47,12 @@ const SearchedHotels = ({ match }, props) => {
                 <div className={styles.marginLeft}>
                   <div className={styles.hotelListingDiv}>
                     <div className={styles.carouselDiv}>
-                      <Carousel fade className={styles.carouselStyle}>
-                        {hotelImages.map((image) => {
-                          return (
-                            <Carousel.Item>
-                              <img
-                                className={styles.CarouselDisplayImage}
-                                src={image}
-                                alt={otherConstants.imageAlt}
-                              />
-                            </Carousel.Item>
-                          );
-                        })}
-                      </Carousel>
+                      <CarouselComponent
+                        className={styles.carouselStyle}
+                        imageStyle={styles.CarouselDisplayImage}
+                        imageData={hotelImages}
+                        altText={otherConstants.imageAlt}
+                      />
                     </div>
                     <div className={styles.contentDiv}>
                       <div className={styles.cardStyling}>
