@@ -77,3 +77,57 @@
   display: block;
   margin-left: 20px;
 }
+
+.userReviewOuterDiv {
+  width: 100%;
+  border: 1px solid black;
+  margin-top: 2px;
+}
+
+.innerDiv {
+  display: flex;
+  padding: 10px;
+}
+
+.reviewImage {
+  height: 30px;
+  width: 30px;
+  border-radius: 10px;
+}
+
+.labelReview {
+  height: 20px;
+  margin-left: 10px;
+}
+
+.descriptionStyles {
+  display: block;
+  padding: 5px;
+  text-align: left;
+}
+
+.userReviewOuterDiv {
+  font-size: 1.5rem;
+  margin-top: 20px;
+  font-family: Poppins;
+}
+
+.userInfoInnerDiv {
+  display: flex;
+  margin-left: 100px;
+  margin-top: 20px;
+}
+
+.HeadingButtons {
+  background-color: rgb(255, 109, 56);
+  border: none;
+  outline: none;
+  height: 60px;
+  width: 20%;
+  margin-left: 10px;
+  border-radius: 4px;
+}
+
+.extremeLeft {
+  margin-left: -550px;
+}

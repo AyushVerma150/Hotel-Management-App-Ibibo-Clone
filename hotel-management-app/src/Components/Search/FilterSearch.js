@@ -1,265 +1,201 @@
-import React, { useEffect, useState } from 'react';
-import
-{
-    FormControlLabel,
-    Checkbox,
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-} from '@material-ui/core';
-import { useDispatch, useSelector } from 'react-redux';
-import { filterHotels } from 'Components/Hotel/HotelSlice';
-import { updateAppliedFilters } from 'Components/Hotel/HotelSlice';
-import CheckBoxControl from 'UI/CheckBoxControl';
-import styles from 'Components/Search/Search.module.css';
+import { filterHotels } from "Components/Hotel/HotelSlice";
+import { updateAppliedFilters } from "Components/Hotel/HotelSlice";
+import CheckBoxControl from "UI/CheckBoxControl";
 
-const FilterSearch = () =>
-{
+import styles from "Components/Search/Search.module.css";
+import otherConstants from "Constants/OtherConstants";
 
-    const dispatch = useDispatch();
-    // const filters = useState( state => state.hotel.hotelFilters );
-    const applyFilters = useSelector( state => state.hotel.appliedFilters );
-    useEffect( () =>
+const FilterSearch = () => {
+  const dispatch = useDispatch();
+
+  const priceRange = [
     {
-        dispatch( filterHotels( applyFilters ) );
-    }, [applyFilters] );
+      name: otherConstants.veryLowPrice,
+      label: otherConstants.veryLowPriceRange,
+      minPrice: otherConstants.veryLowPriceData.min,
+      maxPrice: otherConstants.veryLowPriceData.max,
+    },
+    {
+      name: otherConstants.lowPrice,
+      label: otherConstants.lowPriceRange,
+      minPrice: otherConstants.lowPriceData.min,
+      maxPrice: otherConstants.lowPriceData.max,
+    },
+    {
+      name: otherConstants.mediumPrice,
+      label: otherConstants.mediumPriceRange,
+      minPrice: otherConstants.mediumPriceData.min,
+      maxPrice: otherConstants.mediumPriceData.max,
+    },
+    {
+      name: otherConstants.highPrice,
+      label: otherConstants.highPriceRange,
+      minPrice: otherConstants.highPriceData.min,
+      maxPrice: otherConstants.highPriceData.max,
+    },
+    {
+      name: otherConstants.veryHighPrice,
+      label: otherConstants.veryHighPriceRange,
+      minPrice: otherConstants.veryHighPriceData.min,
+      maxPrice: otherConstants.veryHighPriceData.max,
+    },
+  ];
 
+  const ratingsRange = [
+    {
+      name: otherConstants.veryHighRating,
+      label: otherConstants.veryHighRatingLabel,
+    },
+    {
+      name: otherConstants.highRating,
+      label: otherConstants.highRatingLabel,
+    },
+    {
+      name: otherConstants.mediumRating,
+      label: otherConstants.mediumRatingLabel,
+    },
+    {
+      name: otherConstants.lowRating,
+      label: otherConstants.lowRatingLabel,
+    },
+  ];
 
-    return (
-        <div className={styles.divStyle}>
-            <strong style={{ color: "black" }}>Filters</strong>
-            <div className={styles.filterBox}>
-                <CheckBoxControl
-                    name="internet"
-                    label="internet"
-                    changed={() =>
-                    {
-                        dispatch( updateAppliedFilters( { name: "internet" } ) );
-                    }}
-                    checked={applyFilters.internet}
-                />
-            </div>
-            <div className={styles.filterBox}>
-                <CheckBoxControl
-                    name="breakfast"
-                    label="Free Breakfast"
-                    changed={() =>
-                    {
-                        dispatch( updateAppliedFilters( { name: "breakfast" } ) );
-                    }}
-                    checked={applyFilters.breakfast}
-                />
-            </div>
+  const hotelType = [
+    {
+      name: otherConstants.typeHotel,
+    },
+    { name: otherConstants.typeMotel },
+    {
+      name: otherConstants.typeVilla,
+    },
+  ];
 
-            <div className={styles.filterBox}>
-                <CheckBoxControl
-                    name="cancellation"
-                    label="Cancellation Available"
-                    changed={() =>
-                    {
-                        dispatch( updateAppliedFilters( { name: "cancellation" } ) );
-                    }}
-                    checked={applyFilters.cancellation}
-                />
-            </div>
+  const applyFilters = useSelector((state) => state.hotel.appliedFilters);
+  useEffect(() => {
+    dispatch(filterHotels(applyFilters));
+  }, [applyFilters, dispatch]);
 
-            <div className={styles.filterContainer}>
-                <label><strong>Select Price Range</strong></label>
-                <br />
-                <CheckBoxControl
-                    class={styles.display}
-                    name="veryLowPrice"
-                    label="Upto ₹2000"
-                    changed={() =>
-                    {
-                        dispatch( updateAppliedFilters( { name: "veryLowPrice", minPrice: 0, maxPrice: 2000 } ) );
-                    }}
-                    checked={applyFilters.veryLowPrice}
-                />
-                <CheckBoxControl
-                    class={styles.display}
-                    name="lowPrice"
-                    label="₹2001 - ₹4000"
-                    changed={() =>
-                    {
-                        dispatch( updateAppliedFilters( { name: "lowPrice", minPrice: 2001, maxPrice: 4000 } ) );
-                    }}
-                    checked={applyFilters.lowPrice}
-                />
-                <CheckBoxControl
-                    class={styles.display}
-                    name="mediumPrice"
-                    label="₹4001 - ₹6000"
-                    changed={() =>
-                    {
-                        dispatch( updateAppliedFilters( { name: "mediumPrice", minPrice: 4001, maxPrice: 6000 } ) );
-                    }}
-                    checked={applyFilters.mediumPrice}
-                />
-                <CheckBoxControl
-                    class={styles.display}
-                    name="highPrice"
-                    label="₹6001 - ₹8000"
-                    changed={() =>
-                    {
-                        dispatch( updateAppliedFilters( { name: "highPrice", minPrice: 6001, maxPrice: 8000 } ) );
-                    }}
-                    checked={applyFilters.highPrice}
-                />
-                <CheckBoxControl
-                    class={styles.display}
-                    name="veryHighPrice"
-                    label="₹8001 and Above"
-                    changed={() =>
-                    {
-                        dispatch( updateAppliedFilters( { name: "veryHighPrice", minPrice: 8001, maxPrice: 50000 } ) );
-                    }}
-                    checked={applyFilters.veryHighPrice}
-                />
-            </div>
-            <div style={{
-                backgroundColor: "#f7f6eb",
-                textAlign: "left",
-                display: "block",
-                fontSize: "0.75rem",
-                color: "black",
-                padding: "5px",
-                marginBottom: "3px",
-                borderRadius: "10px",
-                boxShadow: "0 4px 8x 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"
-            }}>
-                <lable><strong>Select Hotel Rating</strong></lable>
-                <FormControlLabel
-                    style={{ display: "block" }}
-                    control={<Checkbox
-                        checked={applyFilters.veryHighRating}
-                        onChange={
-                            () =>
-                            {
-                                // setApplyFilters( prevFilter => (
-                                //     {
-                                //         ...prevFilter,
-                                //         veryHighRating: !prevFilter.veryHighRating
-                                //     }
-                                // ) )
-                            }
-                        } name="4.5+" />}
-                    label="4.5+"
-                />
-                <FormControlLabel
-                    style={{ display: "block" }}
-                    control={<Checkbox
-                        checked={applyFilters.highRating}
-                        onChange={
-                            () =>
-                            {
-                                // setApplyFilters( prevFilter => (
-                                //     {
-                                //         ...prevFilter,
-                                //         highRating: !prevFilter.highRating
-                                //     }
-                                // ) )
-                            }
-                        } name="" />}
-                    label="4+"
-                />
-                <FormControlLabel
-                    style={{ display: "block" }}
-                    control={<Checkbox
-                        checked={applyFilters.mediumRating}
-                        onChange={
-                            () =>
-                            {
-                                // setApplyFilters( prevFilter => (
-                                //     {
-                                //         ...prevFilter,
-                                //         mediumRating: !prevFilter.mediumRating
-                                //     }
-                                // ) )
-                            }
-                        } name="" />}
-                    label="3.5+"
-                />
-                <FormControlLabel
-                    style={{ display: "block" }}
-                    control={<Checkbox
-                        checked={applyFilters.lowRating}
-                        onChange={
-                            () =>
-                            {
-                                // setApplyFilters( prevFilter => (
-                                //     {
-                                //         ...prevFilter,
-                                //         lowRating: !prevFilter.lowRating
-                                //     }
-                                // ) )
-                            }
-                        } name="" />}
-                    label="3+"
-                />
-            </div>
+  return (
+    <div className={styles.divStyle}>
+      {/* This Section Allows User to filter Hotels According to his applied Fillters */}
 
+      <strong className={styles.colorBlack}>Filters</strong>
+      <div className={styles.filterBox}>
+        <CheckBoxControl
+          name={otherConstants.internetAmenity}
+          label={otherConstants.internetAmenity}
+          changed={() => {
+            dispatch(
+              updateAppliedFilters({ name: otherConstants.internetAmenity })
+            );
+          }}
+          checked={applyFilters.internet}
+        />
+      </div>
+      <div className={styles.filterBox}>
+        <CheckBoxControl
+          name={otherConstants.breakfastAmenity}
+          label={otherConstants.breakfastAmenity}
+          changed={() => {
+            dispatch(
+              updateAppliedFilters({ name: otherConstants.breakfastAmenity })
+            );
+          }}
+          checked={applyFilters.breakfast}
+        />
+      </div>
 
-            <div style={{
-                backgroundColor: "#f7f6eb",
-                textAlign: "left",
-                display: "block",
-                fontSize: "0.75rem",
-                color: "black",
-                padding: "5px",
-                marginBottom: "3px",
-                borderRadius: "10px",
-                boxShadow: "0 4px 8x 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"
-            }}>
-                <lable><strong>Select Hotel Type</strong></lable>
-                <FormControlLabel
-                    style={{ display: "block" }}
-                    control={<Checkbox
-                        checked={applyFilters.motel}
-                        onChange={
-                            () =>
-                            {
-                                dispatch( updateAppliedFilters( { name: "motel" } ) );
-                            }
-                        } name="" />}
-                    label="Motel"
-                />
+      <div className={styles.filterBox}>
+        <CheckBoxControl
+          name={otherConstants.cancellationAmenity}
+          label={otherConstants.cancellationAmenity}
+          changed={() => {
+            dispatch(
+              updateAppliedFilters({ name: otherConstants.cancellationAmenity })
+            );
+          }}
+          checked={applyFilters.cancellation}
+        />
+      </div>
 
-                <FormControlLabel
-                    style={{ display: "block" }}
-                    control={<Checkbox
-                        checked={applyFilters.hotel}
-                        onChange={
-                            () =>
-                            {
-                                dispatch( updateAppliedFilters( { name: "hotel" } ) );
-                            }
-                        } name="" />}
-                    label="Hotel"
-                />
-                <FormControlLabel
-                    style={{ display: "block" }}
-                    control={<Checkbox
-                        checked={applyFilters.villa}
-                        onChange={
-                            () =>
-                            {
-                                dispatch( updateAppliedFilters( { name: "villa" } ) );
-                            }
-                        } name="" />}
-                    label="Villa"
-                />
+      <div className={styles.filterContainer}>
+        <label>
+          <strong>Select Price Range</strong>
+        </label>
+        <br />
 
-            </div>
-            {/* <Button
-                style={{
-                    color: "white",
-                    backgroundColor: "rgb(255, 109, 56)",
-                    height: "50px",
-                    width: "200px",
-                    borderRadius: "20px",
-                }}
-            >Apply Filters</Button> */}
-        </div>
-    );
-}
+        {priceRange.map((pricing) => {
+          return (
+            <CheckBoxControl
+              class={styles.display}
+              name={pricing.name}
+              label={pricing.label}
+              changed={() => {
+                dispatch(
+                  updateAppliedFilters({
+                    name: pricing.name,
+                    minPrice: pricing.minPrice,
+                    maxPrice: pricing.maxPrice,
+                  })
+                );
+              }}
+              checked={applyFilters[pricing.name]}
+            />
+          );
+        })}
+      </div>
+      <div className={styles.filterContainer}>
+        <lable>
+          <strong>Select Hotel Rating</strong>
+        </lable>
+        <br />
+        {ratingsRange.map((rating) => {
+          return (
+            <CheckBoxControl
+              class={styles.display}
+              name={rating.name}
+              label={rating.label}
+              changed={() => {
+                dispatch(
+                  updateAppliedFilters({
+                    name: rating.name,
+                  })
+                );
+              }}
+              checked={applyFilters[rating.name]}
+            />
+          );
+        })}
+      </div>
+      <div className={styles.filterContainer}>
+        <lable>
+          <strong>Select Hotel Type</strong>
+        </lable>
+
+        <br />
+        {hotelType.map((type) => {
+          return (
+            <CheckBoxControl
+              class={styles.display}
+              name={type.name}
+              label={type.name}
+              changed={() => {
+                dispatch(
+                  updateAppliedFilters({
+                    name: type.name,
+                  })
+                );
+              }}
+              checked={applyFilters[type.name]}
+            />
+          );
+        })}
+      </div>
+    </div>
+  );
+};
 
 export default FilterSearch;

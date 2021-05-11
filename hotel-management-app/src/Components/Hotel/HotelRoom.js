@@ -1,8 +1,9 @@
 import React from "react";
-import { Carousel, Button } from "react-bootstrap";
+import { Carousel } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 
+import Button from "UI/Button";
 import CardComponent from "UI/CardComponent";
 import { setHotelSelected } from "Components/Hotel/HotelSlice";
 
@@ -42,6 +43,8 @@ const HotelRoom = () => {
 
   return (
     <div>
+      {/* 
+      This Section Allows To Display Rooms Fetched of The Hotels If Available */}
       {roomsAvailable.map((room) => {
         return (
           <div className={styles.singleRoomDiv}>
@@ -98,10 +101,10 @@ const HotelRoom = () => {
                           <div>
                             <Button
                               disabled={!currentUser ? true : false}
-                              onClick={() => {
+                              clicked={() => {
                                 handleSelectRoom(room);
                               }}
-                              className={styles.roomSelectButton}
+                              class={styles.roomSelectButton}
                             >
                               <strong>{otherConstants.selectRoom}</strong>
                             </Button>

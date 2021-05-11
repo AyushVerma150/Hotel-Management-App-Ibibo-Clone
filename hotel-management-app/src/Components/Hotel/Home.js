@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 import moment from "moment";
+
 import {
   setFilterSearchSlice,
   setChildrenReducer,
@@ -10,6 +11,7 @@ import {
 import { fetchAllHotels, setStayDates } from "Components/Hotel/HotelSlice";
 import CardComponent from "UI/CardComponent";
 import MultiSearchComponent from "Components/Search/MultiSearchComponent";
+
 import otherConstants from "Constants/OtherConstants";
 import styles from "Components/Hotel/Hotel.module.css";
 
@@ -32,9 +34,9 @@ const Home = (props) => {
     searchText: otherConstants.emptyText,
     checkIn: checkInDate,
     checkOut: checkOutDate,
-    adults: 2,
-    rooms: 1,
-    children: 0,
+    adults: otherConstants.defaultAdults,
+    rooms: otherConstants.defaultRooms,
+    children: otherConstants.defaultChildren,
   });
 
   useEffect(() => {
@@ -59,6 +61,7 @@ const Home = (props) => {
   };
 
   return (
+    // This is the Home Page
     <div className={styles.outerDiv}>
       <div className={styles.innerDiv}>
         <div className={styles.displayBlock}>
@@ -73,6 +76,7 @@ const Home = (props) => {
       </div>
 
       <div className={styles.HotelDiv}>
+        {/* All the Destinations Card are Displayed Here */}
         {destinations.map((destination) => {
           return (
             <CardComponent

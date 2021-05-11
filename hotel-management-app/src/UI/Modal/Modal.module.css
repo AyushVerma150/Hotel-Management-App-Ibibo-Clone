@@ -1,62 +1,59 @@
-.modalHeader
-{
-    background-color: dodgerblue;
-    font-family: "Poppins";
-    background-color: white;
+.modalHeader {
+  background-color: dodgerblue;
+  font-family: "Poppins";
+  background-color: white;
 }
 
-
-.floatLeft
-{
-    float:left;
+.floatLeft {
+  float: left;
 }
-.floatRight
-{
-    float:right;
+.floatRight {
+  float: right;
 }
 
-.marginLeft
-{
-    margin-left:10px;
+.marginLeft {
+  margin-left: 10px;
 }
 
-.displayFlex
-{
- display:flex
+.displayFlex {
+  display: flex;
 }
 
-.labelStyle
-{
-    margin-left: 20px;
-    margin-top:20px;
+.labelStyle {
+  margin-left: 20px;
+  margin-top: 20px;
 }
 
-.marginRight
-{
-    margin-right:5px
+.marginRight {
+  margin-right: 5px;
 }
 
-.imageStyle
-{
-    height:100px;
-    width:100px;
+.imageStyle {
+  height: 100px;
+  width: 100px;
 }
 
-.checkBoxStyle
-{   
-    margin-top:5px;
+.checkBoxStyle {
+  margin-top: 5px;
 }
 
-.toppingBox
-{
-display: flex;
-justify-content: space-between;
-align-items: center;
+.toppingBox {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.cheeseLabel
-{
-    margin-left: 20px;
-    margin-right: 10px;
-    margin-top:2px;
+.cheeseLabel {
+  margin-left: 20px;
+  margin-right: 10px;
+  margin-top: 2px;
+}
+
+.modalDiv {
+  height: 100%;
+  width: 100%;
+  background-color: black;
+  z-index: 100;
+  opacity: 1;
+  margin-top: 100px;
 }

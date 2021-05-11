@@ -9,7 +9,7 @@ export const editUserFormValidators = Yup.object({
     .required(Errors.requiredField),
 });
 export const editUserFormValues = {
-  userName: "Aman Bansal",
+  userName: "",
   contact: "",
   file: "",
 };

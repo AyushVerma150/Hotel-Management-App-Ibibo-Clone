@@ -1,10 +1,11 @@
 import React from "react";
-
-import { Carousel, Button } from "react-bootstrap";
+import { Carousel } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { Link } from "react-scroll";
 
+import Button from "UI/Button";
 import CardComponent from "UI/CardComponent";
+
 import styles from "Components/Hotel/Hotel.module.css";
 import otherConstants from "Constants/OtherConstants";
 
@@ -34,6 +35,7 @@ const HotelDetail = (props) => {
   }
 
   return (
+    // This Section Returns Hotel Information  , Pricing and Cost and Soldout Info
     <div className={styles.singleHotelViewMainInnerDiv}>
       <div className={styles.singleHotelViewLeftAlignedDiv}>
         <Carousel fade>
@@ -133,7 +135,7 @@ const HotelDetail = (props) => {
                   type: otherConstants.cardComponentType,
                   content: (
                     <div className={styles.roomOptionsOuterDiv}>
-                      <Button className={styles.roomsOptionButton}>
+                      <Button class={styles.roomsOptionButton}>
                         <Link
                           to={otherConstants.roomsSection}
                           spy={true}

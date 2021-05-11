@@ -1,4 +1,5 @@
 import React from "react";
+
 import otherConstants from "Constants/OtherConstants";
 import styles from "Components/Hotel/Hotel.module.css";
 

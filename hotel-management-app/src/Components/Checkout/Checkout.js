@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import moment from "moment";
-import { Button } from "react-bootstrap";
 
-// import { Card } from "react-bootstrap";
+import Button from "UI/Button";
 import { createBooking } from "Components/Hotel/HotelSlice";
 import CardComponent from "UI/CardComponent";
 
 import styles from "Components/Checkout/Checkout.module.css";
 import otherConstants from "Constants/OtherConstants";
-import OtherConstants from "Constants/OtherConstants";
 
 const Checkout = () => {
   const dispatch = useDispatch();
@@ -31,11 +29,11 @@ const Checkout = () => {
   const rooms = selectedHotels[0].rooms;
   const nightsSpent = days;
   const discount = selectedHotels[0].price - selectedHotels[0].discountPrice;
-  const tax = 498;
 
   const handleCreateBooking = () => {
+    //createing a data object for bookings
     const bookingsData = {
-      amount: roomCharges * days - discount + tax,
+      amount: roomCharges * days - discount + otherConstants.taxValue,
       roomsBooked: rooms,
       adults: selectedHotels[0].adults,
       children: selectedHotels[0].children,
@@ -49,6 +47,7 @@ const Checkout = () => {
     dispatch(createBooking(bookingsData));
   };
 
+  //checking the bookings status
   useEffect(() => {
     if (bookingStatus === otherConstants.successStatus) {
       setContent(
@@ -67,6 +66,7 @@ const Checkout = () => {
 
   return (
     <div>
+      {/* The Whole Div is divided into two Halves with information about Hotel Selected And Price Summary */}
       <div className={styles.checkoutOuterDiv}>{content}</div>
       <div className={styles.checkoutInnerDiv}>
         <div className={styles.checkoutCardDiv}>
@@ -74,7 +74,7 @@ const Checkout = () => {
             return (
               <CardComponent
                 className={styles.cardComponentStyles}
-                image={OtherConstants.checkoutImage}
+                image={otherConstants.checkoutImage}
                 imageStyle={styles.checkOutImageStyle}
                 cardTitle={[
                   {
@@ -91,21 +91,21 @@ const Checkout = () => {
                     content: (
                       <div className={styles.checkoutDivContent}>
                         <div className={styles.leftDiv}>
-                          <strong>Check In</strong>
+                          <strong>{otherConstants.checkInText}</strong>
                           <p>{hotel.checkIn}</p>
                         </div>
                         <div className={styles.rightDiv}>
-                          <strong>Check Out</strong>
+                          <strong>{otherConstants.checkOutText}</strong>
                           <p>{hotel.checkOut}</p>
                         </div>
                         <div className={styles.rightDiv}>
-                          <strong>Guests</strong>
+                          <strong>{otherConstants.guestInfo}</strong>
                           <p>
                             {hotel.adults +
                               hotel.children +
-                              " Guests  | " +
+                              otherConstants.guestInfoText +
                               hotel.rooms +
-                              " Room"}
+                              otherConstants.roomsText}
                           </p>
                         </div>
                       </div>
@@ -122,11 +122,7 @@ const Checkout = () => {
         </div>
         <div className={styles.priceSummaryDiv}>
           <CardComponent
-            style={{
-              fontFamily: "Poppins",
-              fontSize: "1.2rem",
-              padding: "5px",
-            }}
+            className={styles.cardInnerStyles}
             cardTitle={[
               {
                 type: otherConstants.cardComponentType,
@@ -134,8 +130,12 @@ const Checkout = () => {
                   <div className={styles.contentOuterDiv}>
                     <div className={styles.contentInnerLeftDiv}>
                       <strong>
-                        Room Charges (
-                        {rooms + " rooms x " + nightsSpent + " nights"})
+                        {otherConstants.roomCharges +
+                          rooms +
+                          otherConstants.roomInfo +
+                          otherConstants.crossSymbol +
+                          nightsSpent +
+                          otherConstants.nightsText}
                       </strong>
                     </div>
                     <div className={styles.contentInnerRightDiv}>
@@ -152,7 +152,7 @@ const Checkout = () => {
                 content: (
                   <div className={styles.contentOuterDiv}>
                     <div className={styles.contentInnerLeftDiv}>
-                      <strong>Discount</strong>
+                      <strong>{otherConstants.discount}</strong>
                     </div>
                     <div className={styles.contentInnerRightDiv}>
                       <strong>{otherConstants.indianRuppee + discount}</strong>
@@ -165,10 +165,12 @@ const Checkout = () => {
                 content: (
                   <div className={styles.contentOuterDiv}>
                     <div className={styles.contentInnerLeftDiv}>
-                      <strong>Taxes and Fees</strong>
+                      <strong>{otherConstants.taxesAndFees}</strong>
                     </div>
                     <div className={styles.contentInnerRightDiv}>
-                      <strong>Rs. 498</strong>
+                      <strong>
+                        {otherConstants.indianRuppee + otherConstants.taxValue}
+                      </strong>
                     </div>
                   </div>
                 ),
@@ -178,12 +180,14 @@ const Checkout = () => {
                 content: (
                   <div className={styles.contentOuterDiv}>
                     <div className={styles.contentInnerLeftDiv}>
-                      <strong>Pay Now</strong>
+                      <strong>{otherConstants.payNow}</strong>
                     </div>
                     <div className={styles.contentInnerRightDiv}>
                       <strong>
                         {otherConstants.indianRuppee +
-                          (roomCharges * nightsSpent - discount + tax)}
+                          (roomCharges * nightsSpent -
+                            discount +
+                            otherConstants.taxValue)}
                       </strong>
                     </div>
                   </div>
@@ -193,12 +197,12 @@ const Checkout = () => {
                 type: otherConstants.cardComponentType,
                 content: (
                   <Button
-                    onClick={() => {
+                    clicked={() => {
                       handleCreateBooking();
                     }}
-                    className={styles.createBookingButton}
+                    class={styles.createBookingButton}
                   >
-                    Create Booking
+                    {otherConstants.createBooking}
                   </Button>
                 ),
               },

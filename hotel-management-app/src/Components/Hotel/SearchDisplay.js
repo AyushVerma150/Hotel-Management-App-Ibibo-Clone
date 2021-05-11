@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Button } from "react-bootstrap";
 
+import Button from "UI/Button";
 import TextFieldComponent from "UI/TextFieldComponent";
 import { setFilterSearchSlice } from "Components/Hotel/HotelSlice";
 import { updateAdults, updateRooms } from "Components/Hotel/HotelSlice";
@@ -90,14 +90,13 @@ const SearchDisplay = () => {
         />
       </div>
       <Button
-        className={styles.searchDisplayUpdateSearch}
-        onClick={() => {
+        class={styles.searchDisplayUpdateSearch}
+        clicked={() => {
           dispatch(setFilterSearchSlice(filterSearch));
         }}
       >
         Update Search
       </Button>
-
       <span>
         <div
           className={
@@ -108,40 +107,40 @@ const SearchDisplay = () => {
         >
           <strong className={styles.textStyle}>Update Guests</strong>
           <div className={styles.guestDiv}>
-            <lable>Adults</lable>
+            <lable>{otherConstants.displayAdults}</lable>
             <br />
-            <Button>-</Button>
+            <Button>{otherConstants.subtractIcon}</Button>
             <Button>{filterResults.adults}</Button>
             <Button
-              onClick={() => {
+              clicked={() => {
                 dispatch(updateAdults());
               }}
             >
-              +
+              {otherConstants.addIcon}
             </Button>
           </div>
           <div className={styles.guestDiv}>
-            <lable>Rooms</lable>
+            <lable>{otherConstants.displayRooms}</lable>
             <br />
-            <Button>-</Button>
+            <Button>{otherConstants.subtractIcon}</Button>
             <Button>{filterResults.rooms}</Button>
             <Button
-              onClick={() => {
+              clicked={() => {
                 if (filterSearch.rooms < 8) {
                   dispatch(updateRooms());
                 }
               }}
             >
-              +
+              {otherConstants.addIcon}
             </Button>
           </div>
           <Button
-            className={styles.doneButton}
-            onClick={() => {
+            class={styles.doneButton}
+            clicked={() => {
               setShowDiv(otherConstants.none);
             }}
           >
-            Done
+            {otherConstants.displayDone}
           </Button>
         </div>
       </span>

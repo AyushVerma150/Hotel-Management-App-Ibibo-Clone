@@ -1,13 +1,15 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import styles from "Components/Hotel/Hotel.module.css";
+
 import { Carousel } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import SearchDisplay from "Components/Hotel/SearchDisplay";
 import FilterSearch from "Components/Search/FilterSearch";
 import { fetchAllHotels } from "Components/Hotel/HotelSlice";
 import CardComponent from "UI/CardComponent";
+
 import otherConstants from "Constants/OtherConstants";
+import styles from "Components/Hotel/Hotel.module.css";
 
 const SearchedHotels = ({ match }, props) => {
   const dispatch = useDispatch();
@@ -100,7 +102,7 @@ const SearchedHotels = ({ match }, props) => {
                               {
                                 heading: otherConstants.discountPrice,
                                 para: hotel.discountPrice,
-                                icon: otherConstants.discountPrice,
+                                icon: otherConstants.ruppeeIcon,
                               },
                             ]}
                           />

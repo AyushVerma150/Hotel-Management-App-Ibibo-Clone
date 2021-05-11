@@ -62,6 +62,8 @@ const SingleHotelView = ({ match }) => {
 
   return (
     <div className={styles.singleHotelViewMainDiv}>
+      {/* This Section Contains Various Components Like Hotel Reviews , Hotel Detail , Hotel Policies */}
+
       <HotelDetail hotelName={hotelName} />
       <br />
       <div className={styles.commonButtonType}>

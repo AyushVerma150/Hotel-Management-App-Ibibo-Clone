@@ -1,58 +1,70 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import { axiosInstance } from "../../AxiosConfig";
 import errorConstants from "Constants/Error";
+import otherConstants from "Constants/OtherConstants";
 
 let token, errorMsg, userInfo;
 
 const initialState = {
   currentUser: null,
-  status: "idle",
+  status: otherConstants.idleStatus,
   currentUserReviews: [],
   error: null,
-  token: "",
+  token: null,
 };
 
 export const userLoginResponse = createAsyncThunk(
   "users/userLoginResponse",
   async (values) => {
-    const response = await axios.post(
-      "http://localhost:8080/user/login",
-      values
-    );
-    if (response.data.message) {
-      errorMsg = response.data.message;
-      throw Error(response.data.message);
+    try {
+      const response = await axiosInstance.post(
+        otherConstants.loginPath,
+        values
+      );
+      if (response.data.message) {
+        errorMsg = response.data.message;
+        throw Error(response.data.message);
+      }
+      token = response.data.data[1];
+      userInfo = response.data.data[0];
+      return response.data.data;
+    } catch (err) {
+      throw new Error(otherConstants.requestDenied);
     }
-    token = response.data.data[1];
-    userInfo = response.data.data[0];
-    return response.data.data;
   }
 );
 
 export const userSignUpResponse = createAsyncThunk(
   "users/userSignUpResponse",
   async (values) => {
-    alert(JSON.stringify(values));
-    const result = await axios.post(
-      "http://localhost:8080/user/register",
-      values
-    );
-    if (result.data.message) {
-      errorMsg = result.data.message;
-      throw Error(result.data.message);
+    try {
+      const result = await axiosInstance.post(
+        otherConstants.signUpPath,
+        values
+      );
+      if (result.data.message) {
+        errorMsg = result.data.message;
+        throw Error(result.data.message);
+      }
+      return result.data.data;
+    } catch (err) {
+      throw new Error(otherConstants.requestDenied);
     }
-    return result.data.data;
   }
 );
 
 export const loginSlice = createSlice({
-  name: "login",
+  name: otherConstants.userState,
   initialState,
-  reducers: {},
+  reducers: {
+    setStatus: (state, action) => {
+      state.status = otherConstants.idleStatus;
+    },
+  },
   extraReducers: {
     [userLoginResponse.fulfilled]: (state, action) => {
-      state.status = "success";
-      state.token = action.payload;
+      state.status = otherConstants.successStatus;
+      state.token = token;
       state.currentUser = userInfo;
     },
     [userLoginResponse.rejected]: (state) => {
@@ -60,21 +72,21 @@ export const loginSlice = createSlice({
       state.error = errorMsg;
     },
     [userLoginResponse.pending]: (state) => {
-      state.status = "loading";
+      state.status = otherConstants.loadingState;
     },
     [userSignUpResponse.pending]: (state) => {
-      state.status = "loading";
+      state.status = otherConstants.loadingState;
     },
     [userSignUpResponse.fulfilled]: (state, action) => {
-      state.status = "success";
+      state.status = otherConstants.successStatus;
       state.currentUser = action.payload;
     },
     [userSignUpResponse.rejected]: (state, action) => {
-      state.status = "failed";
+      state.status = otherConstants.failedStatus;
       state.error = errorMsg;
     },
   },
 });
-export const {} = loginSlice.actions;
+export const { setStatus } = loginSlice.actions;
 
 export default loginSlice.reducer;

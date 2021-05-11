@@ -1,19 +1,11 @@
 import React, { useState } from "react";
 import { AppBar, Toolbar } from "@material-ui/core";
 import { IconButton } from "@material-ui/core";
-import { Home } from "@material-ui/icons";
-import { List } from "@material-ui/core";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  useHistory,
-} from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { Home, List } from "@material-ui/icons";
 
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import HomeComponent from "../src/Components/Hotel/Home";
-import HotelList from "Components/Hotel/HotelList";
 import SingleHotelView from "Components/Hotel/SingleHotelView";
 import SearchedHotels from "Components/Hotel/SearchedHotels";
 import Checkout from "Components/Checkout/Checkout";
@@ -25,7 +17,7 @@ import UserProfile from "Components/User/UserProfile";
 
 import "./App.css";
 import styles from "Components/Hotel/Hotel.module.css";
-//import { useHistory, Link } from "react-router-dom";
+import otherConstants from "Constants/OtherConstants";
 
 const App = () => {
   const appBarStyling = {
@@ -47,45 +39,34 @@ const App = () => {
     marginLeft: "30px",
     right: "0",
     fontFamily: "Poppins",
-  };
-
-  const history = useHistory();
-
-  const handleUserProfileClick = () => {
-    alert(JSON.stringify(history));
+    color: "black",
   };
 
   const dispatch = useDispatch();
   const modalState = useSelector(getModalState);
-  const [userStatus, setUserStatus] = useState("login");
+  const [userStatus, setUserStatus] = useState(otherConstants.loginState);
 
   const currentUser = useSelector((state) => state.user.currentUser);
 
   return (
     <div className="App">
       <Router>
-        <AppBar position="static" style={appBarStyling}>
+        <AppBar position={otherConstants.static} style={appBarStyling}>
           <Toolbar style={toolBarStyling}>
             <IconButton
-              edge="start"
-              color="inherit"
-              aria-label="home"
-              style={{ width: "55%", left: "0", marginLeft: "-30px" }}
+              color={otherConstants.inheritColor}
+              className={styles.iconButton}
             >
-              <Home fontSize="medium" style={{ marginLeft: "-550px" }} />
+              <Home className={styles.extremeLeft} />
             </IconButton>
             <List
               style={listStyling}
-              component="nav"
-              aria-labelledby="main navigation"
+              component={otherConstants.navComponent}
               className={styles.navDisplayFlex}
             >
-              <Link to="/userProfile">
-                <p
-                  className={styles.paraStyles}
-                  onClick={handleUserProfileClick}
-                >
-                  User Profile
+              <Link to={otherConstants.userProfilePath}>
+                <p className={styles.paraStyles}>
+                  {otherConstants.viewProfile}
                 </p>
               </Link>
             </List>
@@ -94,40 +75,30 @@ const App = () => {
                 <img
                   src={
                     !currentUser
-                      ? "http://www.gravatar.com/avatar/?d=mp"
+                      ? otherConstants.dummyUserImage
                       : currentUser.userImage
                   }
-                  alt="user"
+                  alt={otherConstants.imageAlt}
                   className={styles.UserProfileDiv}
                 />
                 <p className={styles.UserProfileInnerDiv}>
                   {!currentUser ? (
-                    <a
-                      style={{ cursor: "pointer" }}
+                    <p
+                      className={styles.cursorPointer}
                       onClick={() => {
                         dispatch(showModal());
                       }}
                     >
-                      Sign Up | Login
-                    </a>
+                      {otherConstants.signUpOrLogin}
+                    </p>
                   ) : (
                     <div className={styles.displayFlex}>
                       <p className={styles.UserInfoInnerDiv}>
-                        {"Hey , " + currentUser.userName.split(" ")[0]}
+                        {otherConstants.heyUser +
+                          currentUser.userName.split(" ")[0]}
                       </p>
-                      <label
-                        style={{
-                          fontWeight: "Bold",
-                          fontFamily: "Poppins",
-                          right: "0",
-                          width: "15%",
-                          color: "black",
-                          marginLeft: "5px",
-                          cursor: "pointer",
-                        }}
-                        onClick={handleUserProfileClick}
-                      >
-                        <strong>View Profile</strong>
+                      <label className={styles.viewProfileLabel}>
+                        <strong>{otherConstants.viewProfile}</strong>
                       </label>
                     </div>
                   )}
@@ -139,7 +110,7 @@ const App = () => {
         <Switch>
           <Route
             exact
-            path="/"
+            path={otherConstants.pathToHomePage}
             render={() => (
               <div>
                 <br />
@@ -149,58 +120,63 @@ const App = () => {
           />
           <Route
             exact
-            path="/Destinations/:destinationName"
-            component={HotelList}
+            path={otherConstants.pathToHotelView}
+            component={SingleHotelView}
           />
-          <Route exact path="/hotels/:hotelName" component={SingleHotelView} />
           <Route
             exact
-            path="/findHotels/:searchText"
+            path={otherConstants.pathToFindHotels}
             component={SearchedHotels}
           />
-          <Route exact path="/checkout" component={Checkout} />
-          <Route exact path="/userProfile" component={UserProfile} />
+          <Route
+            exact
+            path={otherConstants.pathToCheckOut}
+            component={Checkout}
+          />
+          <Route
+            exact
+            path={otherConstants.pathToUserProfile}
+            component={UserProfile}
+          />
         </Switch>
       </Router>
 
       <ModalComponent
         modalHeader={userStatus}
-        title="Login or Sign Up"
+        title={otherConstants.signUpOrLogin}
         show={modalState}
       >
-        {userStatus === "login" ? (
+        {userStatus === otherConstants.loginState ? (
           <div>
             <Login />
             <br />
-            <a className={styles.AnchorTagStyle}>
-              Are you new here ?{" "}
+            <p className={styles.AnchorTagStyle}>
+              {otherConstants.loginNote}
               <strong
                 onClick={() => {
-                  //alert( "Will This work" );
-                  setUserStatus("signup");
+                  setUserStatus(otherConstants.signupState);
                 }}
                 className={styles.stongStyles}
               >
-                Sign Up
-              </strong>{" "}
-            </a>
+                {otherConstants.signUp}
+              </strong>
+            </p>
           </div>
         ) : (
           <div>
             <SignUp />
             <br />
-            <a className={styles.AnchorTagStyle}>
-              Already have an account ?{" "}
+            <p className={styles.AnchorTagStyle}>
+              {otherConstants.signUpNote}
               <strong
                 onClick={() => {
-                  //alert( "Will This work" );
-                  setUserStatus("login");
+                  setUserStatus(otherConstants.loginState);
                 }}
                 className={styles.stongStyles}
               >
-                Login
-              </strong>{" "}
-            </a>
+                {otherConstants.login}
+              </strong>
+            </p>
           </div>
         )}
       </ModalComponent>

@@ -359,6 +359,14 @@
 .btnStyleAdults {
   margin-left: 3px;
   margin-right: 3px;
+  border-radius: 4px;
+  background-color: rgb(255, 109, 56);
+  outline: none;
+  box-shadow: none;
+  color: white;
+  border: none;
+  height: 40px;
+  width: 50px;
 }
 
 .divStyleForChildren {
@@ -402,7 +410,11 @@
   height: 50px;
   width: 200px;
   margin-top: 30px;
-  margin-left: 150px;
+  margin-left: 180px;
+  background-color: dodgerblue;
+  color: white;
+  border: none;
+  outline: none;
 }
 
 .destinationsDiv {
@@ -445,6 +457,7 @@
   height: 60px;
   width: 50%;
   border-radius: 10px;
+  color: white;
 }
 
 .hotelReviewOuterDiv {
@@ -498,7 +511,8 @@
   border: none;
   outline: none;
   height: 60px;
-  width: 120%;
+  width: 100%;
+  padding: 10px;
   margin-left: -20px;
   border-radius: 4px;
 }
@@ -607,9 +621,23 @@
   font-family: Poppins;
 }
 
+.iconButton {
+  width: 55%;
+  left: 0px;
+  margin-left: -30px;
+}
+
+.extremeLeft {
+  margin-left: -550px;
+}
+
 .paraStyles {
-  font-size: 1.5rem;
+  font-size: 2.24rem;
   cursor: pointer;
+  margin-top: 13px;
+  margin-left: -120px;
+  text-decoration: none;
+  color: red;
 }
 
 .divStylingApp {
@@ -647,6 +675,21 @@
 
 .AnchorTagStyle {
   margin-left: 28%;
+  cursor: pointer;
+}
+
+.viewProfileLabel {
+  font-weight: Bold;
+  font-family: Poppins;
+  right: 0;
+  width: 15%;
+  color: black;
+  margin-left: 5px;
+  cursor: pointer;
+}
+
+.cursorPointer {
+  cursor: pointer;
 }
 
 .strongStyles {

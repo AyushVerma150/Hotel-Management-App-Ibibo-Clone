@@ -2,7 +2,6 @@ import React from "react";
 import { useSelector } from "react-redux";
 
 import otherConstants from "Constants/OtherConstants";
-
 import styles from "Components/Hotel/Hotel.module.css";
 
 const HotelReview = () => {
@@ -11,6 +10,7 @@ const HotelReview = () => {
   );
   return (
     <div>
+      {/* Hotels Review Section */}
       {currentHotelReviews.map((review) => {
         return (
           <div className={styles.hotelReviewOuterDiv}>

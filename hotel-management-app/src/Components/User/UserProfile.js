@@ -1,19 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import styles from "Components/User/User.module.css";
+import { useSelector } from "react-redux";
+
 import CardComponent from "UI/CardComponent";
-import { Button } from "react-bootstrap";
-import { useHistory } from "react-router-dom";
+import Button from "UI/Button";
 import EditUserProfile from "./EditUserProfile";
 
+import otherConstants from "Constants/OtherConstants";
+import styles from "Components/User/User.module.css";
 const UserProfile = () => {
-  const history = useHistory();
   const currentUser = useSelector((state) => state.user.currentUser);
   const [component, setComponent] = useState(null);
 
   useEffect(() => {}, []);
 
-  let userComponent = null;
   let reviewComponent = null;
   let bookingsComponent = null;
   const currentUserReviews = useSelector(
@@ -24,65 +23,54 @@ const UserProfile = () => {
 
   if (bookingsMadeByUser) {
     bookingsComponent = (
-      // bookingsMadeByUser.map((booking) => {
-      //   return (
       <CardComponent
         cardTitle={[
-          { heading: "Booking Id", para: bookingsMadeByUser.id },
-          { heading: "Primary Guest", para: bookingsMadeByUser.primaryGuest },
-          { heading: "Rooms Booked", para: bookingsMadeByUser.roomsBooked },
-          { heading: "Total Amount", para: bookingsMadeByUser.amount },
-          { heading: "Check In", para: bookingsMadeByUser.checkIn },
-          { heading: "Check Out", para: bookingsMadeByUser.checkOut },
+          { heading: otherConstants.bookingsId, para: bookingsMadeByUser.id },
+          {
+            heading: otherConstants.primaryGuest,
+            para: bookingsMadeByUser.primaryGuest,
+          },
+          {
+            heading: otherConstants.roomsBooked,
+            para: bookingsMadeByUser.roomsBooked,
+          },
+          {
+            heading: otherConstants.totalAmount,
+            para: bookingsMadeByUser.amount,
+          },
+          {
+            heading: otherConstants.checkInText,
+            para: bookingsMadeByUser.checkIn,
+          },
+          {
+            heading: otherConstants.checkOutText,
+            para: bookingsMadeByUser.checkOut,
+          },
         ]}
       />
     );
-    //   );
-    // });
   }
 
   if (currentUserReviews) {
     reviewComponent = currentUserReviews.map((review) => {
       return (
-        <div
-          style={{ width: "100%", border: "1px solid black", marginTop: "2px" }}
-        >
-          <div
-            style={{
-              display: "flex",
-              padding: "10px",
-            }}
-          >
+        <div className={styles.userReviewOuterDiv}>
+          <div className={styles.innerDiv}>
             <img
               src={review.user.userImage}
-              alt="BigCo Inc. logo"
-              style={{
-                height: "30px",
-                width: "30px",
-                borderRadius: "10px",
-              }}
+              alt={otherConstants.imageAlt}
+              className={styles.reviewImage}
             />
-            <label
-              style={{
-                height: "20px",
-                marginLeft: "10px",
-              }}
-            >
-              {" "}
+            <label className={styles.labelReview}>
               <strong>{review.user.userName}</strong>
             </label>
           </div>
           <br />
-          <div
-            style={{
-              display: "block",
-              padding: "5px",
-            }}
-          >
-            <p style={{ textAlign: "left" }}>{review.description}</p>
-            <p style={{ textAlign: "left" }}>
+          <div className={styles.descriptionStyles}>
+            <p>{review.description}</p>
+            <p>
               <strong>Rating : </strong>
-              {review.rating} / 5
+              {review.rating} / {otherConstants.overAllRating}
             </p>
           </div>
         </div>
@@ -103,25 +91,13 @@ const UserProfile = () => {
   const handleUserReviews = () => {
     setComponent(
       <div>
-        <label
-          style={{
-            fontSize: "1.5rem",
-            marginTop: "20px",
-            fontFamily: "Poppins",
-          }}
-        >
-          <strong>Reviews and Ratings</strong>
+        <label className={styles.outerDiv}>
+          <strong>{otherConstants.reviewAndRatings}</strong>
         </label>
         {reviewComponent}
       </div>
     );
   };
-
-  //   if (currentUser) {
-  //     userComponent = <h4>{"Hello , " + currentUser.name}</h4>;
-  //   } else {
-  //     userComponent = <h4>Please Login / Sign up to continue</h4>;
-  //   }
 
   return (
     <div className={styles.userProfileDiv}>
@@ -132,7 +108,7 @@ const UserProfile = () => {
               <img
                 className={styles.profileImage}
                 src={currentUser.userImage}
-                alt="alternative text"
+                alt={otherConstants.imageAlt}
               />
             </div>
             <div className={styles.rightHalf}>
@@ -162,64 +138,36 @@ const UserProfile = () => {
           </div>
 
           <div className={styles.userInfoDiv}>
-            <div
-              style={{
-                display: "flex",
-                marginLeft: "100px",
-                marginTop: "20px",
-              }}
-            >
+            <div className={styles.userInfoInnerDiv}>
               <Button
-                style={{
-                  backgroundColor: "rgb(255, 109, 56)",
-                  border: "none",
-                  outline: "none",
-                  height: "60px",
-                  width: "20%",
-                  marginLeft: "10px",
-                  borderRadius: "4px",
-                }}
-                onClick={() => {
+                class={styles.HeadingButtons}
+                clicked={() => {
                   handleBookingsClick();
                 }}
               >
-                Bookings
+                {otherConstants.userBookings}
               </Button>
               <Button
-                onClick={() => {
+                clicked={() => {
                   handleUserReviews();
                 }}
-                style={{
-                  backgroundColor: "rgb(255, 109, 56)",
-                  border: "none",
-                  outline: "none",
-                  height: "60px",
-                  width: "20%",
-                  marginLeft: "10px",
-                  borderRadius: "4px",
-                }}
+                class={styles.HeadingButtons}
               >
-                Reviews
+                {otherConstants.userReviews}
               </Button>
               <Button
-                onClick={() => {
+                clicked={() => {
                   handleEditProfile();
                 }}
-                style={{
-                  backgroundColor: "rgb(255, 109, 56)",
-                  border: "none",
-                  outline: "none",
-                  height: "60px",
-                  width: "20%",
-                  marginLeft: "10px",
-                  borderRadius: "4px",
-                }}
+                class={styles.HeadingButtons}
               >
-                Edit Profile
+                {otherConstants.editButton}
               </Button>
             </div>
-            <div style={{ marginLeft: "-550px" }}>
-              <label className={styles.labelLogin}>User Information</label>
+            <div className={styles.extremeLeft}>
+              <label className={styles.labelLogin}>
+                {otherConstants.userInformation}
+              </label>
             </div>
             <hr className={styles.highlight} />
             {component}

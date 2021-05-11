@@ -1,20 +1,22 @@
 import React, { useState } from "react";
 import otherConstants from "Constants/OtherConstants";
-import styles from "Components/Hotel/Hotel.module.css";
-import { Button } from "react-bootstrap";
+import nextId from "react-id-generator";
+import { useHistory } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import moment from "moment";
+
+import Button from "UI/Button";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import TextFieldComponent from "UI/TextFieldComponent";
 import SearchIcon from "@material-ui/icons/Search";
-import moment from "moment";
-import { fetchAllHotels, setStayDates } from "Components/Hotel/HotelSlice";
-import { useDispatch, useSelector } from "react-redux";
+
+import { setStayDates } from "Components/Hotel/HotelSlice";
 import {
   setFilterSearchSlice,
   setChildrenReducer,
-  updateSearchText,
 } from "Components/Hotel/HotelSlice";
-import nextId from "react-id-generator";
-import { useHistory } from "react-router";
+
+import styles from "Components/Hotel/Hotel.module.css";
 
 const MultiSearchComponent = () => {
   const history = useHistory();
@@ -30,9 +32,9 @@ const MultiSearchComponent = () => {
     searchText: otherConstants.emptyText,
     checkIn: checkInDate,
     checkOut: checkOutDate,
-    adults: 2,
-    rooms: 1,
-    children: 0,
+    adults: otherConstants.defaultAdults,
+    rooms: otherConstants.defaultRooms,
+    children: otherConstants.defaultChildren,
   });
   const [component, setComponent] = useState(null);
   const [children, setChildren] = useState([]);
@@ -68,7 +70,7 @@ const MultiSearchComponent = () => {
   const addChildHandler = (id) => {
     setChildren(
       children.map((item) => {
-        if (item.id === id) {
+        if (item.id === id && item.age < otherConstants.maxChildrenAge) {
           return {
             ...item,
             age: item.age + 1,
@@ -80,14 +82,16 @@ const MultiSearchComponent = () => {
   };
 
   const incremenetAdults = () => {
-    setFilterSearch((prevFilter) => ({
-      ...prevFilter,
-      adults: prevFilter.adults + 1,
-    }));
+    if (filterSearch.adults <= otherConstants.maxAdultsAllowed) {
+      setFilterSearch((prevFilter) => ({
+        ...prevFilter,
+        adults: prevFilter.adults + 1,
+      }));
+    }
   };
 
   const decrementAdults = () => {
-    if (filterSearch.adults > 1) {
+    if (filterSearch.adults > otherConstants.minGuestsAllowed) {
       setFilterSearch((prevFilter) => ({
         ...prevFilter,
         adults: prevFilter.adults - 1,
@@ -96,7 +100,7 @@ const MultiSearchComponent = () => {
   };
 
   const addRoomsHandler = () => {
-    if (filterSearch.rooms < 8) {
+    if (filterSearch.rooms < otherConstants.maxRoomsAllowed) {
       setFilterSearch((prevFilter) => ({
         ...prevFilter,
         rooms: prevFilter.rooms + 1,
@@ -104,7 +108,7 @@ const MultiSearchComponent = () => {
     }
   };
   const removeRoomsHandler = () => {
-    if (filterSearch.rooms > 1) {
+    if (filterSearch.rooms > otherConstants.minRoomsBooked) {
       setFilterSearch((prevFilter) => ({
         ...prevFilter,
         rooms: prevFilter.rooms - 1,
@@ -113,16 +117,17 @@ const MultiSearchComponent = () => {
   };
 
   const decrementAdultsHandler = () => {
-    if (filterSearch.children >= 1) {
+    if (filterSearch.children >= otherConstants.minChildrenAdded) {
       setFilterSearch((prevFilter) => ({
         ...prevFilter,
         children: prevFilter.children - 1,
       }));
+      removeChildrenHandler();
     }
   };
 
   const addChildrenHandler = () => {
-    if (filterSearch.children <= 3) {
+    if (filterSearch.children <= otherConstants.maxChildrenAllowed) {
       setChildren([
         ...children,
         {
@@ -137,8 +142,19 @@ const MultiSearchComponent = () => {
     }
   };
 
+  const removeChildrenHandler = () => {
+    if (children.length === 1) {
+      setChildren([]);
+    } else {
+      const newChildren = [...children];
+      newChildren.splice(newChildren.length - 1);
+      setChildren(newChildren);
+    }
+  };
+
   return (
     <div>
+      {/* This Component is Present on The Home Page and Allows user to Search Hotels by area , landmark , Loaction , Checkin and checkout dates and number of Guests in Room facility */}
       {component}
       <label htmlFor={otherConstants.searchText}>Where</label>
       <br />
@@ -215,13 +231,11 @@ const MultiSearchComponent = () => {
         <div className={styles.innerDivForAdults}>
           <lable>Adults</lable>
           <br />
-          <Button className={styles.btnStyleAdults} onClick={decrementAdults}>
+          <Button class={styles.btnStyleAdults} clicked={decrementAdults}>
             {otherConstants.subtractIcon}
           </Button>
-          <Button className={styles.btnStyleAdults}>
-            {filterSearch.adults}
-          </Button>
-          <Button onClick={incremenetAdults} className={styles.btnStyleAdults}>
+          <Button class={styles.btnStyleAdults}>{filterSearch.adults}</Button>
+          <Button clicked={incremenetAdults} class={styles.btnStyleAdults}>
             {otherConstants.addIcon}
           </Button>
         </div>
@@ -229,16 +243,11 @@ const MultiSearchComponent = () => {
           <div>
             <lable>Rooms</lable>
             <br />
-            <Button
-              onClick={removeRoomsHandler}
-              className={styles.btnStyleAdults}
-            >
+            <Button clicked={removeRoomsHandler} class={styles.btnStyleAdults}>
               {otherConstants.subtractIcon}
             </Button>
-            <Button className={styles.btnStyleAdults}>
-              {filterSearch.rooms}
-            </Button>
-            <Button onClick={addRoomsHandler} className={styles.btnStyleAdults}>
+            <Button class={styles.btnStyleAdults}>{filterSearch.rooms}</Button>
+            <Button clicked={addRoomsHandler} class={styles.btnStyleAdults}>
               {otherConstants.addIcon}
             </Button>
           </div>
@@ -248,18 +257,15 @@ const MultiSearchComponent = () => {
             <lable>Children</lable>
             <br />
             <Button
-              className={styles.btnStyleAdults}
-              onClick={decrementAdultsHandler}
+              class={styles.btnStyleAdults}
+              clicked={decrementAdultsHandler}
             >
               {otherConstants.subtractIcon}
             </Button>
-            <Button className={styles.btnStyleAdults}>
+            <Button class={styles.btnStyleAdults}>
               {filterSearch.children}
             </Button>
-            <Button
-              className={styles.btnStyleAdults}
-              onClick={addChildrenHandler}
-            >
+            <Button class={styles.btnStyleAdults} clicked={addChildrenHandler}>
               {otherConstants.addIcon}
             </Button>
           </div>
@@ -278,17 +284,18 @@ const MultiSearchComponent = () => {
               </label>
               <br></br>
               <div className={styles.displayFlex}>
-                <Button className={styles.btnStyleForSubmit}>
+                <Button class={styles.btnStyleAdults}>
                   {otherConstants.subtractIcon}
                 </Button>
-                <label className={styles.labelStyles}>
+                {/* <label class={styles.labelStyles}>
                   <strong>{child.age}</strong>
-                </label>
+                </label> */}
+                <Button class={styles.btnStyleAdults}>{child.age}</Button>
                 <Button
-                  onClick={() => {
+                  clicked={() => {
                     addChildHandler(child.id);
                   }}
-                  className={styles.btnStyleForSubmit}
+                  class={styles.btnStyleAdults}
                 >
                   {otherConstants.addIcon}
                 </Button>
@@ -298,7 +305,7 @@ const MultiSearchComponent = () => {
         })}
       </div>
 
-      <Button className={styles.searchHotels} onClick={searchHotelHandler}>
+      <Button class={styles.searchHotels} clicked={searchHotelHandler}>
         Search Hotels
       </Button>
     </div>

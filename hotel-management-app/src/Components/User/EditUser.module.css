@@ -25,3 +25,33 @@
   border: none;
   cursor: pointer;
 }
+
+.successStatusDiv {
+  height: 40px;
+  width: 50%;
+  font-family: Poppins;
+  color: green;
+  margin-left: 25%;
+
+  /* style={{
+    height: "40px",
+    width: "50%",
+    fontFamily: "Poppins",
+    color: "green",
+    marginLeft: "25%",
+  }} */
+}
+
+.errorStatusDiv {
+  height: 40px;
+  width: 50%;
+  font-family: Poppins;
+  color: red;
+  margin-left: 25%;
+}
+
+.fileInput {
+  margin-left: 25%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
