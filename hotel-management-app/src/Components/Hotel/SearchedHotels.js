@@ -1,20 +1,17 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styles from "Components/Hotel/Hotel.module.css";
-import { Card, Carousel } from "react-bootstrap";
+import { Carousel } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import SearchDisplay from "Components/Hotel/SearchDisplay";
 import FilterSearch from "Components/Search/FilterSearch";
 import { fetchAllHotels } from "Components/Hotel/HotelSlice";
 import CardComponent from "UI/CardComponent";
+import otherConstants from "Constants/OtherConstants";
+
 const SearchedHotels = ({ match }, props) => {
   const dispatch = useDispatch();
-  const hotelImages = [
-    "https://cdn1.goibibo.com/voy_ing/t_g/106925c06e9911e7bdee025f77df004f.jpg",
-    "https://cdn1.goibibo.com/voy_ing/t_g/5a89674e15ab11eaa7340242ac110003.jpg",
-    "https://cdn1.goibibo.com/voy_ing/t_g/e63a316e83d911ea96850242ac110005.jpg",
-    "https://cdn1.goibibo.com/voy_ing/t_g/81ad700a81ee11e486f9daf4768ad8d9.jfif",
-  ];
+  const hotelImages = otherConstants.hotelImages;
   const searchFilters = useSelector((state) => state.hotel.filteredSearch);
 
   useEffect(() => {
@@ -43,7 +40,7 @@ const SearchedHotels = ({ match }, props) => {
             return (
               <Link
                 to={`/hotels/${hotel.name}`}
-                style={{ textDecoration: "none" }}
+                className={styles.textDecoration}
               >
                 <div className={styles.marginLeft}>
                   <div className={styles.hotelListingDiv}>
@@ -55,7 +52,7 @@ const SearchedHotels = ({ match }, props) => {
                               <img
                                 className={styles.CarouselDisplayImage}
                                 src={image}
-                                alt="alternative text"
+                                alt={otherConstants.imageAlt}
                               />
                             </Carousel.Item>
                           );
@@ -66,41 +63,44 @@ const SearchedHotels = ({ match }, props) => {
                       <div className={styles.cardStyling}>
                         <div className={styles.locationDiv}>
                           <CardComponent
-                            style={{ height: "300px", border: "none" }}
+                            className={styles.priceInfoDiv}
                             cardTitle={[
-                              { heading: "Name", para: hotel.name },
                               {
-                                heading: "Locate on Map",
+                                heading: otherConstants.hotelName,
+                                para: hotel.name,
+                              },
+                              {
+                                heading: otherConstants.hotelLocation,
                                 para: hotel.location,
-                                icon: <i class="fas fa-map-marked-alt"></i>,
+                                icon: otherConstants.locationIcon,
                               },
                               {
-                                heading: "Landmark",
+                                heading: otherConstants.landmark,
                                 para: hotel.landmark,
-                                icon: <i class="fas fa-monument"></i>,
+                                icon: otherConstants.landmarkIcon,
                               },
                               {
-                                heading: "Type",
+                                heading: otherConstants.hotelType,
                                 para: hotel.type,
-                                icon: <i class="fas fa-hotel"></i>,
+                                icon: otherConstants.hotelIcon,
                               },
                             ]}
                           />
                         </div>
                         <div className={styles.cardComponentDiv}>
                           <CardComponent
-                            style={{ height: "300px", border: "none" }}
+                            className={styles.priceInfoDiv}
                             cardTitle={[
-                              { heading: "Pricing Start At : ", para: "" },
+                              { heading: otherConstants.pricingInfo },
                               {
-                                heading: "Original Price",
+                                heading: otherConstants.originalPrice,
                                 para: hotel.startPrice,
-                                icon: <i class="fas fa-rupee-sign"></i>,
+                                icon: otherConstants.ruppeeIcon,
                               },
                               {
-                                heading: "Dicount Price",
+                                heading: otherConstants.discountPrice,
                                 para: hotel.discountPrice,
-                                icon: <i class="fas fa-rupee-sign"></i>,
+                                icon: otherConstants.discountPrice,
                               },
                             ]}
                           />

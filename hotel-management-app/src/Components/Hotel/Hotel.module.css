@@ -653,3 +653,21 @@
   cursor: pointer;
   font-family: Poppins;
 }
+
+.hotelInfoCardStyling {
+  border: none;
+  margin-top: 20px;
+
+  background-color: transparent;
+  border-radius: 10px;
+  width: 100%;
+}
+
+.priceInfoDiv {
+  height: 300px;
+  border: none;
+}
+
+.textDecoration {
+  text-decoration: none;
+}

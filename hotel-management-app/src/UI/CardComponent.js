@@ -1,5 +1,6 @@
 import React from "react";
 import { Card } from "react-bootstrap";
+import otherConstants from "Constants/OtherConstants";
 
 const CardComponent = (props) => {
   return (
@@ -13,7 +14,7 @@ const CardComponent = (props) => {
           <Card.Img src={props.image} className={props.imageStyle}></Card.Img>
         ) : null}
         {props.cardTitle.map((title) => {
-          return title.type === "button" ? (
+          return title.type === otherConstants.cardComponentType ? (
             <Card.Title>{title.content}</Card.Title>
           ) : (
             <Card.Title>

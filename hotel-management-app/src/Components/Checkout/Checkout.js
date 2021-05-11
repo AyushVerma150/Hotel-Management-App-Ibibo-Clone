@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Card } from "react-bootstrap";
-import { createBooking } from "Components/Hotel/HotelSlice";
 import moment from "moment";
 import { Button } from "react-bootstrap";
+
+// import { Card } from "react-bootstrap";
+import { createBooking } from "Components/Hotel/HotelSlice";
 import CardComponent from "UI/CardComponent";
+
 import styles from "Components/Checkout/Checkout.module.css";
+import otherConstants from "Constants/OtherConstants";
+import OtherConstants from "Constants/OtherConstants";
 
 const Checkout = () => {
   const dispatch = useDispatch();
@@ -14,9 +18,15 @@ const Checkout = () => {
   const currentUser = useSelector((state) => state.user.currentUser);
   const [content, setContent] = useState(null);
 
-  const startDate = moment(selectedHotels[0].checkIn, "YYYY-MM-DD");
-  const endDate = moment(selectedHotels[0].checkOut, "YYYY-MM-DD");
-  const days = endDate.diff(startDate, "days");
+  const startDate = moment(
+    selectedHotels[0].checkIn,
+    otherConstants.dateTimeFormat
+  );
+  const endDate = moment(
+    selectedHotels[0].checkOut,
+    otherConstants.dateTimeFormat
+  );
+  const days = endDate.diff(startDate, otherConstants.daysDifference);
   const roomCharges = selectedHotels[0].discountPrice;
   const rooms = selectedHotels[0].rooms;
   const nightsSpent = days;
@@ -32,7 +42,7 @@ const Checkout = () => {
       checkIn: selectedHotels[0].checkIn,
       checkOut: selectedHotels[0].checkOut,
       primaryGuest: currentUser.userName,
-      modeOfPayment: "online",
+      modeOfPayment: otherConstants.onlineModeOfPayment,
       hotelId: selectedHotels[0].id,
       userId: currentUser.id,
     };
@@ -40,13 +50,13 @@ const Checkout = () => {
   };
 
   useEffect(() => {
-    if (bookingStatus === "success") {
+    if (bookingStatus === otherConstants.successStatus) {
       setContent(
         <div className={styles.successDiv}>
           <strong>Booking Made Successfully</strong>
         </div>
       );
-    } else if (bookingStatus === "failed") {
+    } else if (bookingStatus === otherConstants.failedStatus) {
       setContent(
         <div className={styles.errorDiv}>
           <strong>Booking Failed</strong>
@@ -63,28 +73,21 @@ const Checkout = () => {
           {selectedHotels.map((hotel) => {
             return (
               <CardComponent
-                style={{
-                  border: "none",
-                  color: "black",
-                  boxShadow:
-                    " 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-                }}
-                image="https://cdn1.goibibo.com/voy_ing/t_g/81ad700a81ee11e486f9daf4768ad8d9.jfif"
-                imageStyle={{ height: "200px", width: "30%" }}
+                className={styles.cardComponentStyles}
+                image={OtherConstants.checkoutImage}
+                imageStyle={styles.checkOutImageStyle}
                 cardTitle={[
                   {
-                    heading: "Name",
+                    heading: otherConstants.hotelName,
                     para: hotel.name,
                   },
                   {
-                    heading: "Locate on Map",
+                    heading: otherConstants.hotelLocation,
                     para: hotel.location,
-                    icon: <i class="fas fa-map-marked-alt"></i>,
+                    icon: otherConstants.locationIcon,
                   },
                   {
-                    heading: "",
-                    para: "",
-                    type: "button",
+                    type: otherConstants.cardComponentType,
                     content: (
                       <div className={styles.checkoutDivContent}>
                         <div className={styles.leftDiv}>
@@ -109,8 +112,8 @@ const Checkout = () => {
                     ),
                   },
                   {
-                    heading: "Room Selected",
-                    para: hotel.type + "  x" + hotel.rooms,
+                    heading: otherConstants.RoomType,
+                    para: hotel.type + otherConstants.crossSymbol + hotel.rooms,
                   },
                 ]}
               />
@@ -126,7 +129,7 @@ const Checkout = () => {
             }}
             cardTitle={[
               {
-                type: "button",
+                type: otherConstants.cardComponentType,
                 content: (
                   <div className={styles.contentOuterDiv}>
                     <div className={styles.contentInnerLeftDiv}>
@@ -136,26 +139,29 @@ const Checkout = () => {
                       </strong>
                     </div>
                     <div className={styles.contentInnerRightDiv}>
-                      <strong>{"Rs. " + roomCharges * nightsSpent}</strong>
+                      <strong>
+                        {otherConstants.indianRuppee +
+                          roomCharges * nightsSpent}
+                      </strong>
                     </div>
                   </div>
                 ),
               },
               {
-                type: "button",
+                type: otherConstants.cardComponentType,
                 content: (
                   <div className={styles.contentOuterDiv}>
                     <div className={styles.contentInnerLeftDiv}>
                       <strong>Discount</strong>
                     </div>
                     <div className={styles.contentInnerRightDiv}>
-                      <strong>{"Rs. " + discount}</strong>
+                      <strong>{otherConstants.indianRuppee + discount}</strong>
                     </div>
                   </div>
                 ),
               },
               {
-                type: "button",
+                type: otherConstants.cardComponentType,
                 content: (
                   <div className={styles.contentOuterDiv}>
                     <div className={styles.contentInnerLeftDiv}>
@@ -168,7 +174,7 @@ const Checkout = () => {
                 ),
               },
               {
-                type: "button",
+                type: otherConstants.cardComponentType,
                 content: (
                   <div className={styles.contentOuterDiv}>
                     <div className={styles.contentInnerLeftDiv}>
@@ -176,14 +182,15 @@ const Checkout = () => {
                     </div>
                     <div className={styles.contentInnerRightDiv}>
                       <strong>
-                        {"Rs. " + (roomCharges * nightsSpent - discount + tax)}
+                        {otherConstants.indianRuppee +
+                          (roomCharges * nightsSpent - discount + tax)}
                       </strong>
                     </div>
                   </div>
                 ),
               },
               {
-                type: "button",
+                type: otherConstants.cardComponentType,
                 content: (
                   <Button
                     onClick={() => {
