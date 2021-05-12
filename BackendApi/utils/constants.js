@@ -106,6 +106,13 @@ const constants = {
   adminRolesAllowed: ["edit", "delete", "update", "create"],
   userRolesAllowed: ["signup", "login", "view"],
   guestRolesAllowed: ["view"],
+
+  signnUpEmail: (
+    <h1>
+      <p>Welcome to AvHotels.IN</p>
+      <strong>You have successfully Signed up</strong>
+    </h1>
+  ),
 };
 
 module.exports = Object.freeze(constants);

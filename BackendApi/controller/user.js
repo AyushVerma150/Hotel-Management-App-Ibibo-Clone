@@ -69,24 +69,24 @@ module.exports = class UserController {
             },
           }
         );
-        return response.setData(user, "", constants.status.ok);
-        // const updatedUser = await sqlQueries.getUserRow( email );
 
+        const updatedUser = await sqlQueries.getUserRow(email);
         //if not a valid user or update
         if (!user || !isValid || !updatedUser) {
           throw new BadRequest(constants.error.signUpFailed);
         }
-        //return response.setData( updatedUser, constants.status.ok );
         //sending email with HTML content
         const emailHandler = new Email(constants.email.htmlType, res);
 
-        // const ack = await
-        //     emailHandler
-        //         .sendHtml( email, constants.email.sender, constants.email.signupSuccess, "Sign up success" );
-        // if ( ack )
-        // {
-        // return response.setData( updatedUser, constants.status.ok );
-        // }
+        const ack = await emailHandler.sendHtml(
+          email,
+          constants.email.sender,
+          constants.email.signupSuccess,
+          constants.signnUpEmail
+        );
+        if (ack) {
+          return response.setData(user, "", constants.status.ok);
+        }
       }
     } catch (err) {
       return response.setError(err, constants.status.unprocessable);
@@ -132,7 +132,8 @@ module.exports = class UserController {
     try {
       let bodyData = { userName: "", email: "", contact: "", password: "" };
       const handleRequest = new Request(req);
-      // const errors = validationResult( req );
+      const errors = validationResult(req);
+
       //using destructuring i am able  to access the required fields
       const { email, userName, contact } = handleRequest.getBody(bodyData);
       const userInfo = await sqlQueries.getUserRow(email);
